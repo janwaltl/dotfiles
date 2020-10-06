@@ -108,6 +108,7 @@ nmap <leader>[ :bprev<cr>
 syntax enable
 colorscheme gruvbox
 set background=dark
+hi Normal guibg=NONE ctermbg=NONE
 
 let g:gruvbox_contrast_dark='soft'
 let g:gruvbox_contrast_light='soft'
@@ -203,6 +204,7 @@ endfunction
 
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "              Python
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
