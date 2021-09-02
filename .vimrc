@@ -16,7 +16,7 @@ Plug 'honza/vim-snippets'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 " Easy motion jumps
-" Plug 'easymotion/vim-easymotion'
+ Plug 'easymotion/vim-easymotion'
 "Start screen with recent files
 Plug 'mhinz/vim-startify'
 " Fuzzy file finder
@@ -42,6 +42,8 @@ Plug 'junegunn/gv.vim'
 Plug 'airblade/vim-gitgutter'
 " Filesystem tree viewer
 Plug 'preservim/nerdtree'
+
+" Golang
 call plug#end()
 
 
@@ -68,6 +70,7 @@ set relativenumber
 " Start scrolling earlier when moving the cursors
 set scrolloff=10
 
+set visualbell
 set splitbelow
 set mouse=a
 " Allow hidden buffers
@@ -107,8 +110,9 @@ nmap <leader>[ :bprev<cr>
 " Enable syntax highlighting and gruvbox theme
 syntax enable
 colorscheme gruvbox
-set background=dark
-hi Normal guibg=NONE ctermbg=NONE
+set bg=dark
+"set termguicolors
+"hi Normal guibg=NONE ctermbg=NONE
 
 let g:gruvbox_contrast_dark='soft'
 let g:gruvbox_contrast_light='soft'
@@ -167,6 +171,20 @@ map <leader>t :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 
+" Shortcut for switching on/off pasting mode
+function! TogglePaste()
+    if(&paste == 0)
+        set paste
+        echo "Paste Mode Enabled"
+    else
+        set nopaste
+        echo "Paste Mode Disabled"
+    endif
+endfunction
+
+map <leader>p :call TogglePaste()<cr>
+
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "				C/C++
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -221,7 +239,7 @@ let g:jedi#use_splits_not_buffers='top'
 let g:python_highlight_all = 1
 
 let g:pydocstring_doq_path='/home/datel/.local/bin/doq'
-let pydocstring_formatter='google'
+let pydocstring_formatter='numpy'
 
 " Generate docstring
 nmap <silent> <C-m> <Plug>(pydocstring)
