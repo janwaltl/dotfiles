@@ -16,21 +16,16 @@ Plug 'honza/vim-snippets'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 " Easy motion jumps
-" Plug 'easymotion/vim-easymotion'
+Plug 'easymotion/vim-easymotion'
 "Start screen with recent files
 Plug 'mhinz/vim-startify'
 " Fuzzy file finder
 " Plug 'ctrlpvim/ctrlp.vim'
 " Python
-Plug 'davidhalter/jedi-vim'
 Plug 'vim-python/python-syntax'
 Plug 'heavenshell/vim-pydocstring'
 " Auto completion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" C++ Semantic highlighting
-Plug 'jackguo380/vim-lsp-cxx-highlight'
-" C/C++ Syntax check on save
-Plug 'vim-syntastic/syntastic'
 " C/C++ Code formatting on save
 Plug 'Chiel92/vim-autoformat'
 " Git on command line :G
@@ -60,6 +55,8 @@ set backspace=indent,eol,start
 set incsearch
 set hlsearch
 
+set cursorline
+
 " Highlight matching braces
 set showmatch
 " Show relative line numbers
@@ -74,11 +71,21 @@ set mouse=a
 set hidden
 " Easier switching between modes
 nnoremap ; :
+nnoremap : ;
 vnoremap ; :
+vnoremap : ;
 inoremap jk <ESC>
 
+" Move down in "screen coordinates", not lines - usefull in case of wrapped
+" lines.
+nnoremap j gj
+nnoremap k gk
+
+" Disable exec mode, use it for running macros
+nnoremap Q @q
 " Map leader to comma
 let mapleader=","
+
 
 " Move between splits
 nnoremap <leader>h <C-w>h
@@ -100,29 +107,36 @@ noremap gb gT
 "             buffers
 nmap <leader>] :bnext<cr>
 nmap <leader>[ :bprev<cr>
+nnoremap <space> :b#<CR>
+
+" Clear highlights
+:noremap <C-L>  :nohls<CR><C-L>
+
 
 " Highlights the current line in the insert mode
 :autocmd InsertEnter,InsertLeave * set cul!
 
 " Enable syntax highlighting and gruvbox theme
 syntax enable
-colorscheme gruvbox
-set background=dark
-hi Normal guibg=NONE ctermbg=NONE
 
 let g:gruvbox_contrast_dark='soft'
-let g:gruvbox_contrast_light='soft'
+let g:gruvbox_contrast_light='medium'
 let g:gruvbox_termcolors=256
 let g:gruvbox_italicize_strings=1
 let g:gruvbox_italicize_comments=1
+
+hi Normal guibg=NONE ctermbg=NONE
+colorscheme gruvbox
+set bg=dark
+
 
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='badwolf'
 
 "Add Syntastic to airline
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
 
 let g:airline_powerline_fonts = 1
 
@@ -171,7 +185,6 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 "				C/C++
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enable debugger
-packadd! termdebug
 
 let g:syntastic_cpp_config_file = '.syntastic_cpp_config'
 let g:syntastic_c_config_file = '.syntastic_c_config'
@@ -215,13 +228,17 @@ let g:syntastic_python_python_exec = 'python3'
 let g:syntastic_python_checkers = ['flake8']
 
 let g:formatdef_autopep8 = "'autopep8 - -a -a'"
-let g:formatters_python = ['autopep8']
+let g:formatters_python = ['black']
 
 let g:jedi#use_splits_not_buffers='top'
 let g:python_highlight_all = 1
 
-let g:pydocstring_doq_path='/home/datel/.local/bin/doq'
-let pydocstring_formatter='google'
+let g:pydocstring_doq_path='/home/waltljan/.conda/envs/main_env/bin/doq'
+let pydocstring_formatter='numpy'
 
 " Generate docstring
 nmap <silent> <C-m> <Plug>(pydocstring)
+map <silent> <leader>p :set paste<CR>
+map <silent> <leader>p <C-o>:set paste<CR>
+map <silent> <leader>P :set nopaste<CR>
+map <silent> <leader>P <C-o>:set nopaste<CR>
