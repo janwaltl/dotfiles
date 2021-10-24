@@ -24,8 +24,11 @@ Plug 'mhinz/vim-startify'
 " Python
 Plug 'vim-python/python-syntax'
 Plug 'heavenshell/vim-pydocstring'
+Plug 'pixelneo/vim-python-docstring'
 " Auto completion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" C++ Semantic highlighting
+Plug 'jackguo380/vim-lsp-cxx-highlight'
 " C/C++ Code formatting on save
 Plug 'Chiel92/vim-autoformat'
 " Git on command line :G
@@ -67,7 +70,10 @@ set relativenumber
 " Start scrolling earlier when moving the cursors
 set scrolloff=10
 
-set visualbell
+" Enable persistent undo
+set undofile
+set undodir="~/.vim/undodir"
+
 set splitbelow
 set mouse=a
 " Allow hidden buffers
@@ -202,6 +208,11 @@ map <leader>p :call TogglePaste()<cr>
 "				C/C++
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enable debugger
+packadd! termdebug
+let g:termdebug_useFloatingHover = 1
+let g:termdebug_wide=1
+set mouse=a
+set ttymouse=xterm2
 
 let g:syntastic_cpp_config_file = '.syntastic_cpp_config'
 let g:syntastic_c_config_file = '.syntastic_c_config'
@@ -209,9 +220,14 @@ let g:syntastic_c_check_header = 1
 let g:syntastic_c_compiler = 'clang'
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_c_compiler_options = "-std=c99 -Wall -Wextra -Werror -pedantic"
-let g:syntastic_cpp_compiler_options = "-std=c++17 -Wall -Wextra -Werror -pedantic"
+let g:syntastic_cpp_compiler_options = "-std=c++14 -Wall -Wextra -Werror -pedantic"
 
+let g:syntastic_cpp_clang_tidy_post_args = ""
 let g:formattters_c = ['clang-format']
+"let g:syntastic_cpp_checkers = ['clang_tidy']
+
+let g:lsp_cxx_hl_log_file = '/tmp/vim-lsp-cxx-hl.log'
+let g:lsp_cxx_hl_verbose_log = 1
 
 " GoTo coc.nvim code navigation.
 " Disable Vim's default go to definition
@@ -220,6 +236,9 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+" Jump between diagnostics
+nmap <silent> <leader>n <Plug>(coc-diagnostic-next)
+nmap <silent> <leader>p <Plug>(coc-diagnostic-prev)
 
 " Use c-K to show documentation in preview window.
 nnoremap <silent>  <c-k> :call <SID>show_documentation()<CR>
@@ -247,15 +266,34 @@ let g:syntastic_python_checkers = ['flake8']
 let g:formatdef_autopep8 = "'autopep8 - -a -a'"
 let g:formatters_python = ['black']
 
-let g:jedi#use_splits_not_buffers='top'
 let g:python_highlight_all = 1
 
-let g:pydocstring_doq_path='TODO'
+let g:pydocstring_doq_path='~/.local/bin/doq'
 let pydocstring_formatter='numpy'
+let g:python_style='numpy'
 
 " Generate docstring
-nmap <silent> <C-m> <Plug>(pydocstring)
-map <silent> <leader>p :set paste<CR>
-map <silent> <leader>p <C-o>:set paste<CR>
-map <silent> <leader>P :set nopaste<CR>
-map <silent> <leader>P <C-o>:set nopaste<CR>
+nmap <silent> <leader>dc <Plug>(pydocstring)
+nmap <silent> <leader>ss :Docstring<CR>
+
+
+"let g:lsp_cxx_hl_use_text_props = 0
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"CUSTOM HIGHLIGHTING
+" Source:
+" https://vi.stackexchange.com/questions/19040/add-keywords-to-a-highlight-group
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! UpdateTodoKeywords(...)
+    let newKeywords = join(a:000, " ")
+    let synTodo = map(filter(split(execute("syntax list"), '\n') , { i,v -> match(v, '^\w*Todo\>') == 0}), {i,v -> substitute(v, ' .*$', '', '')})
+    for synGrp in synTodo
+        execute "syntax keyword " . synGrp . " contained " . newKeywords
+    endfor
+endfunction
+
+augroup now
+    autocmd!
+    autocmd Syntax * call UpdateTodoKeywords("NOTE", "IMPROVE", "CONSIDER", "TODO", "FIXME", "WARNING", "PERFORMANCE", "OPTIMIZE")
+augroup END
