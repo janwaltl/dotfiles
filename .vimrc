@@ -37,6 +37,8 @@ Plug 'junegunn/gv.vim'
 Plug 'airblade/vim-gitgutter'
 " Filesystem tree viewer
 Plug 'preservim/nerdtree'
+
+" Golang
 call plug#end()
 
 
@@ -65,6 +67,7 @@ set relativenumber
 " Start scrolling earlier when moving the cursors
 set scrolloff=10
 
+set visualbell
 set splitbelow
 set mouse=a
 " Allow hidden buffers
@@ -181,6 +184,20 @@ map <leader>t :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 
+" Shortcut for switching on/off pasting mode
+function! TogglePaste()
+    if(&paste == 0)
+        set paste
+        echo "Paste Mode Enabled"
+    else
+        set nopaste
+        echo "Paste Mode Disabled"
+    endif
+endfunction
+
+map <leader>p :call TogglePaste()<cr>
+
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "				C/C++
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -233,7 +250,7 @@ let g:formatters_python = ['black']
 let g:jedi#use_splits_not_buffers='top'
 let g:python_highlight_all = 1
 
-let g:pydocstring_doq_path='/home/waltljan/.conda/envs/main_env/bin/doq'
+let g:pydocstring_doq_path='TODO'
 let pydocstring_formatter='numpy'
 
 " Generate docstring
