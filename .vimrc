@@ -3,7 +3,7 @@
 " Description: My personal .vimrc
 " Last Modified: July 28, 2020
 
-# Automatic install of Vim plug
+" Automatic install of Vim plug
 let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
 if empty(glob(data_dir . '/autoload/plug.vim'))
   silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
@@ -32,9 +32,10 @@ Plug 'mhinz/vim-startify'
 " Python
 Plug 'vim-python/python-syntax'
 Plug 'heavenshell/vim-pydocstring'
-Plug 'pixelneo/vim-python-docstring'
 " Auto completion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Linting and such
+Plug 'dense-analysis/ale'
 " C++ Semantic highlighting
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 " C/C++ Code formatting on save
@@ -100,8 +101,9 @@ nnoremap k gk
 
 " Disable exec mode, use it for running macros
 nnoremap Q @q
-" Map leader to comma
-let mapleader=","
+" Map leader to space
+nnoremap <SPACE> <Nop>
+let mapleader="\<Space>"
 
 
 " Move between splits
@@ -122,9 +124,8 @@ noremap <leader>9 9gt
 noremap <leader>0 :tablast<cr>
 noremap gb gT
 "             buffers
-nmap <leader>] :bnext<cr>
-nmap <leader>[ :bprev<cr>
-nnoremap <space> :b#<CR>
+noremap <leader>] :bnext<cr>
+noremap <leader>[ :bprev<cr>
 
 " Clear highlights
 :noremap <C-L>  :nohls<CR><C-L>
@@ -193,7 +194,7 @@ inoremap <expr> <s-tab>
   \ pumvisible() ? "\<c-p>" : "\<s-tab>"
 
 " Open nerdtree
-map <leader>t :NERDTreeToggle<CR>
+nnoremap <leader>t :NERDTreeToggle<CR>
 " Close VIm if NERDTree is the only window visible
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
@@ -219,20 +220,18 @@ map <leader>p :call TogglePaste()<cr>
 packadd! termdebug
 let g:termdebug_useFloatingHover = 1
 let g:termdebug_wide=1
+
+if has('nvim')
+	tnoremap <Esc> <C-\><C-n>
+endif
+
+
 set mouse=a
-set ttymouse=xterm2
+if !has('nvim')
+	set ttymouse=xterm2
+endif
 
-let g:syntastic_cpp_config_file = '.syntastic_cpp_config'
-let g:syntastic_c_config_file = '.syntastic_c_config'
-let g:syntastic_c_check_header = 1
-let g:syntastic_c_compiler = 'clang'
-let g:syntastic_cpp_compiler = 'clang++'
-let g:syntastic_c_compiler_options = "-std=c99 -Wall -Wextra -Werror -pedantic"
-let g:syntastic_cpp_compiler_options = "-std=c++14 -Wall -Wextra -Werror -pedantic"
-
-let g:syntastic_cpp_clang_tidy_post_args = ""
-let g:formattters_c = ['clang-format']
-"let g:syntastic_cpp_checkers = ['clang_tidy']
+let g:formattters_c = ['clang-format-11']
 
 let g:lsp_cxx_hl_log_file = '/tmp/vim-lsp-cxx-hl.log'
 let g:lsp_cxx_hl_verbose_log = 1
@@ -245,8 +244,8 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 " Jump between diagnostics
-nmap <silent> <leader>n <Plug>(coc-diagnostic-next)
-nmap <silent> <leader>p <Plug>(coc-diagnostic-prev)
+nmap <silent> gp <Plug>(ale_previous)
+nmap <silent> gn <Plug>(ale_next)
 
 " Use c-K to show documentation in preview window.
 nnoremap <silent>  <c-k> :call <SID>show_documentation()<CR>
@@ -282,11 +281,20 @@ let g:python_style='numpy'
 
 " Generate docstring
 nmap <silent> <leader>dc <Plug>(pydocstring)
-nmap <silent> <leader>ss :Docstring<CR>
 
+""""""""""" ALE """""""""""
+let g:ale_disable_lsp = 1
+let g:ale_open_list = 1
+let g:ale_completion_autoimport = 1
+"let g:ale_linters = {'python':['flake8', 'pylint']}
+let g:ale_linters = {'python':['flake8','pylint','pydocstyle']}
+let g:ale_python_auto_poetry= 1
+let g:ale_python_flake8_auto_poetry= 1
+let g:ale_python_black_auto_poetry= 1
+let g:ale_python_pylint_auto_poetry= 1
+let g:ale_python_pydocstyle_auto_poetry= 1
 
-"let g:lsp_cxx_hl_use_text_props = 0
-
+let g:airline#extensions#ale#enabled = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "CUSTOM HIGHLIGHTING
