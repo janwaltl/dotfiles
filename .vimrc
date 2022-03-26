@@ -287,12 +287,14 @@ let g:ale_disable_lsp = 1
 let g:ale_open_list = 1
 let g:ale_completion_autoimport = 1
 "let g:ale_linters = {'python':['flake8', 'pylint']}
-let g:ale_linters = {'python':['flake8','pylint','pydocstyle']}
+let g:ale_linters = {'python':['flake8','pylint','pydocstyle'],'cpp':['clang++']}
 let g:ale_python_auto_poetry= 1
 let g:ale_python_flake8_auto_poetry= 1
 let g:ale_python_black_auto_poetry= 1
 let g:ale_python_pylint_auto_poetry= 1
 let g:ale_python_pydocstyle_auto_poetry= 1
+
+let g:ale_c_build_dir_names = ['.', 'build']
 
 let g:airline#extensions#ale#enabled = 1
 
