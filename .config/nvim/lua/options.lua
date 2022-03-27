@@ -28,6 +28,7 @@ local options = {
 	splitright = true, -- Split to the right
 	swapfile = false, -- No .swap
 	tabstop = 4, -- 4 spaces per tab
+	termguicolors = true, -- Correct colors
 	timeoutlen = 300, -- 300ms which-key trigger
 	undodir = os.getenv( "HOME" ) .. '/undodir', -- Global persistent undodir
 	undofile = true, -- Persistent undo
