@@ -52,4 +52,4 @@ PS1='\[\e[0;92m\]\u\[\e[0m\]@\[\e[0;91m\]\h\[\e[0m\]|\[\e[0;96m\]\w\[\e[0m\]|\[\
 
 # Add local BIN 
 export PATH=$HOME/.local/bin:$PATH
-
+export EDITOR=nvim
