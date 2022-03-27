@@ -68,7 +68,6 @@ return packer.startup(function(use)
 	-- Status line
 	use({
 		"hoob3rt/lualine.nvim",
-		requires = "kyazdani42/nvim-web-devicons",
 		config = function()
 			require("lualine").setup({ options = { theme = "wombat" } })
 		end,
@@ -86,7 +85,6 @@ return packer.startup(function(use)
 	-- Starting dashboard
 	use({
 		"glepnir/dashboard-nvim",
-		requires = "junegunn/fzf.vim",
 		config = function()
 			require("config.dashboard")
 		end,
@@ -122,7 +120,6 @@ return packer.startup(function(use)
 	-- File browser
 	use({
 		"kyazdani42/nvim-tree.lua",
-		requires = "kyazdani42/nvim-web-devicons",
 		config = function()
 			vim.api.nvim_set_keymap("n", "<leader>t", "<cmd>NvimTreeToggle<cr>", {})
 			require("nvim-tree").setup({
@@ -161,6 +158,8 @@ return packer.startup(function(use)
 	})
 	-- Gitgutter - work with hunks from VIM
 	use("airblade/vim-gitgutter")
+
+	use("kyazdani42/nvim-web-devicons")
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
