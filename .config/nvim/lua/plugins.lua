@@ -126,7 +126,6 @@ return packer.startup(function(use)
 		config = function()
 			vim.api.nvim_set_keymap("n", "<leader>t", "<cmd>NvimTreeToggle<cr>", {})
 			require("nvim-tree").setup({
-				auto_close = true,
 				update_focused_file = {
 					enable = true,
 				},
