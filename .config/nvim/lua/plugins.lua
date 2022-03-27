@@ -159,6 +159,8 @@ return packer.startup(function(use)
 			require("config.lsp")
 		end,
 	})
+	-- Gitgutter - work with hunks from VIM
+	use("airblade/vim-gitgutter")
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins

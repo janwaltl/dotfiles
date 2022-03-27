@@ -30,7 +30,7 @@ local options = {
 	tabstop = 4, -- 4 spaces per tab
 	termguicolors = true, -- Correct colors
 	timeoutlen = 300, -- 300ms which-key trigger
-	undodir = os.getenv( "HOME" ) .. '/undodir', -- Global persistent undodir
+	undodir = os.getenv("HOME") .. "/undodir", -- Global persistent undodir
 	undofile = true, -- Persistent undo
 	updatetime = 300, -- 300ms for cmd completion
 }

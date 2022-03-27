@@ -12,6 +12,7 @@ kmap("", "<Space>", "<Nop>", opts)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 -- Better mode switching
+kmap("v", ";", ":", {})
 kmap("n", ";", ":", {})
 kmap("i", "jk", "<ESC>", {})
 -- Move in "screen coordinates", useful for wrapped lines.
@@ -41,8 +42,15 @@ kmap("i", "<C-k>", "<esc>:m .-2<CR>==i", opts)
 kmap("n", "<C-j>", ":m .+1<CR>==", opts)
 kmap("n", "<C-k>", ":m .-2<CR>==", opts)
 -- Dashboard mappings
-kmap("n", "<Leader>ds", "<cmd>SessionSave<CR>", opts)
-kmap("n", "<Leader>dl", "<cmd>SessionLoad<CR>", opts)
-kmap("n", "<leader>df", ":DashboardFindFile<CR>", opts)
-kmap("n", "<leader>dw", ":DashboardFindWord<CR>", opts)
-kmap("n", "<leader>dh", ":DashboardFindHistory<CR>", opts)
+kmap("n", "<Leader>fs", "<cmd>SessionSave<CR>", opts)
+kmap("n", "<Leader>fl", "<cmd>SessionLoad<CR>", opts)
+kmap("n", "<leader>ff", ":DashboardFindFile<CR>", opts)
+kmap("n", "<leader>fw", ":DashboardFindWord<CR>", opts)
+kmap("n", "<leader>fh", ":DashboardFindHistory<CR>", opts)
+-- Work with hunks
+vim.g.gitgutter_map_keys = 0
+kmap("n", "<leader>hp", ":GitGutterPrevHunk<CR>")
+kmap("n", "<leader>hn", ":GitGutterNextHunk<CR>")
+kmap("n", "<leader>hr", ":GitGutterPreviewHunk<CR>")
+kmap("n", "<leader>hs", ":GitGutterStageHunk<CR>")
+kmap("n", "<leader>hu", ":GitGutterUndoHunk<CR>")
