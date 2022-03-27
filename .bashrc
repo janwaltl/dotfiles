@@ -48,6 +48,7 @@ if ! shopt -oq posix; then
 fi
 
 PS1='\[\e[0;92m\]\u\[\e[0m\]@\[\e[0;91m\]\h\[\e[0m\]|\[\e[0;96m\]\w\[\e[0m\]|\[\e[0;38;5;208m\]$(git branch 2>/dev/null | grep '"'"'^*'"'"' | colrm 1 2)\[\e[0m\]:\n\[\e[0m\]>\[\e[0m\]'
+TERM=xterm-256color
 
 
 # Add local BIN 
