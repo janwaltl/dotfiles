@@ -14,8 +14,6 @@ null_ls.setup({
 		-- null_ls.builtins.formatting.clang_format,
 
 		-- Lua
-		-- cargo install stylua
-		-- add ~/.cargo/bin to PATH
 		null_ls.builtins.formatting.stylua,
 
 		-- Spell checking
@@ -23,4 +21,9 @@ null_ls.setup({
 			args = { "--builtin", "clear,rare,code", "-" },
 		}),
 	},
+	on_attach = function(client)
+		if client.resolved_capabilities.document_formatting then
+			vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
+		end
+	end,
 })

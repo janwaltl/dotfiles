@@ -2,7 +2,6 @@ local lsp_status = require("lsp-status")
 local lsp_signature = require("lsp_signature")
 local lsp_installer = require("nvim-lsp-installer")
 
-
 lsp_status.config({
 	status_symbol = "",
 	indicator_hint = "",
@@ -36,11 +35,6 @@ local common_on_attach = function(client, bufnr)
 	lsp_signature.on_attach({
 		floating_window_above_cur_line = true,
 	})
-
-	vim.cmd([[augroup Format]])
-	vim.cmd([[autocmd! * <buffer>]])
-	vim.cmd([[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()]])
-	vim.cmd([[augroup END]])
 end
 
 lsp_installer.on_server_ready(function(server)
