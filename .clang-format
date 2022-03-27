@@ -8,5 +8,5 @@ AlignTrailingComments : true
 BreakConstructorInitializers : AfterColon
 AlwaysBreakAfterReturnType : All
 Language : Cpp
-SortIncludes : false
+SortIncludes : true
 IndentCaseLabels: false
