@@ -5,6 +5,8 @@ alias fgrep='fgrep --color=auto'
 alias grep='grep --color=auto'
 
 alias gs='git status'
+alias ga='git add'
+alias gc='git commit'
 
 alias l='ls -CF'
 alias la='ls -lAh'
