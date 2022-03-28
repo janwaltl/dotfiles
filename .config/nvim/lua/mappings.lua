@@ -56,3 +56,5 @@ kmap("n", "<leader>hs", ":GitGutterStageHunk<CR>")
 kmap("n", "<leader>hu", ":GitGutterUndoHunk<CR>")
 -- File browser
 kmap("n", "<leader>t", "<cmd>NvimTreeToggle<cr>")
+--- Doc generation
+vim.g.doge_mapping = "<leader>d"

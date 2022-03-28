@@ -159,6 +159,13 @@ return packer.startup(function(use)
 	use("airblade/vim-gitgutter")
 	-- Fancy icons
 	use("kyazdani42/nvim-web-devicons")
+	-- Documentation generation
+	use({
+		"kkoomen/vim-doge",
+		config = function()
+			vim.cmd("call doge#install()")
+		end,
+	})
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
