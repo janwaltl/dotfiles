@@ -54,3 +54,5 @@ kmap("n", "<leader>hn", ":GitGutterNextHunk<CR>")
 kmap("n", "<leader>hr", ":GitGutterPreviewHunk<CR>")
 kmap("n", "<leader>hs", ":GitGutterStageHunk<CR>")
 kmap("n", "<leader>hu", ":GitGutterUndoHunk<CR>")
+-- File browser
+kmap("n", "<leader>t", "<cmd>NvimTreeToggle<cr>")

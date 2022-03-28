@@ -121,7 +121,6 @@ return packer.startup(function(use)
 	use({
 		"kyazdani42/nvim-tree.lua",
 		config = function()
-			vim.api.nvim_set_keymap("n", "<leader>t", "<cmd>NvimTreeToggle<cr>", {})
 			require("nvim-tree").setup({
 				update_focused_file = {
 					enable = true,
