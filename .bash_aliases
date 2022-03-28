@@ -10,3 +10,15 @@ alias l='ls -CF'
 alias la='ls -lAh'
 alias ll='ls -lh'
 alias ls='ls --color=auto'
+
+alias reload='source ~/.bashrc'
+
+function fn_dotupdate() {
+	pushd ~/.dotfiles
+	git pull
+	popd
+}
+alias dotvim='vim ~/.config/nvim/'
+alias dotbash='vim ~/.bashrc'
+alias dotalias='vim ~/.bash_aliases'
+alias dotupdate='fn_dotupdate'
