@@ -158,7 +158,7 @@ return packer.startup(function(use)
 	})
 	-- Gitgutter - work with hunks from VIM
 	use("airblade/vim-gitgutter")
-
+	-- Fancy icons
 	use("kyazdani42/nvim-web-devicons")
 
 	-- Automatically set up your configuration after cloning packer.nvim
