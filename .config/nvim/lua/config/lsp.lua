@@ -37,12 +37,38 @@ local common_on_attach = function(client, bufnr)
 	})
 end
 
+-- Credits https://github.com/neovim/nvim-lspconfig/issues/500#issuecomment-851247107
+-- Make pyright work with virtualenv
+local function get_python_venv_path(workspace)
+  local util = require('lspconfig/util')
+  local path = util.path
+  -- Use activated virtualenv.
+  if vim.env.VIRTUAL_ENV then
+    return path.join(vim.env.VIRTUAL_ENV, 'bin', 'python')
+  end
+
+  -- Find and use virtualenv in workspace directory.
+  for _, pattern in ipairs({'*', '.*'}) do
+    local match = vim.fn.glob(path.join(workspace, pattern, 'venv'))
+    if match ~= '' then
+      return path.join(match, 'bin', 'python')
+    end
+  end
+
+  -- Fallback to system Python.
+  return exepath('python3') or exepath('python') or 'python'
+end
+
 lsp_installer.on_server_ready(function(server)
 	local capabilities = vim.lsp.protocol.make_client_capabilities()
 	capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 	local opts = {
 		on_attach = common_on_attach,
 		capabilities = capabilities,
+		before_init = function(_, config)
+			local p = get_python_venv_path(config.root_dir)
+			config.settings.python.pythonPath = p
+		end,
 	}
 
 	server:setup(opts)
