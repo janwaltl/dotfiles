@@ -45,3 +45,7 @@ vim.opt.relativenumber = true
 -- Doge docstring format
 vim.g.doge_doc_standard_python = "numpy"
 vim.g.doge_enable_mappings = 1
+-- Folder for snippets
+vim.cmd([[
+let g:UltiSnipsSnippetDirectories = ["UltiSnips", "my_snippets"]
+]])
