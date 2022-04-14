@@ -54,3 +54,4 @@ TERM=xterm-256color
 # Add local BIN 
 export PATH=$HOME/.local/bin:$PATH
 export EDITOR=nvim
+export FZF_DEFAULT_COMMAND='rg --files --hidden'
