@@ -173,7 +173,7 @@ return packer.startup(function(use)
 	use({
 		"kkoomen/vim-doge",
 		config = function()
-			vim.cmd("call doge#install()")
+			--vim.cmd("call doge#install()")
 		end,
 	})
 	-- Easy motion, navigation
