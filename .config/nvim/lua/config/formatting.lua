@@ -14,6 +14,8 @@ null_ls.setup({
 		-- Formatting is handled by clangd language server
 		-- null_ls.builtins.formatting.clang_format,
 
+		-- Rust
+		null_ls.builtins.formatting.rustfmt,
 		-- Lua
 		null_ls.builtins.formatting.stylua,
 
@@ -24,7 +26,7 @@ null_ls.setup({
 	},
 	on_attach = function(client)
 		if client.resolved_capabilities.document_formatting then
-			vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
+			vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()")
 		end
 	end,
 })
