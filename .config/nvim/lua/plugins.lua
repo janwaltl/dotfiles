@@ -93,7 +93,7 @@ return packer.startup(function(use)
 		"SirVer/ultisnips",
 		requires = { { "honza/vim-snippets", rtp = "." } },
 		config = function()
-			vim.g.UltiSnipsExpandTrigger = "<Plug>(ultisnips_expand)"
+			vim.g.UltiSnipsExpandTrigger = "<tab>"
 			vim.g.UltiSnipsJumpForwardTrigger = "<Plug>(ultisnips_jump_forward)"
 			vim.g.UltiSnipsJumpBackwardTrigger = "<Plug>(ultisnips_jump_backward)"
 			vim.g.UltiSnipsListSnippets = "<c-s><c-s>"
