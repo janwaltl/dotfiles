@@ -12,6 +12,8 @@ cmp.setup({
 	},
 	mapping = {
 		["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+		["<C-p>"] = cmp.mapping.select_prev_item(),
+		["<C-n>"] = cmp.mapping.select_next_item(),
 		["<C-y>"] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
 		["<C-e>"] = cmp.mapping({
 			i = cmp.mapping.abort(),
@@ -27,10 +29,10 @@ cmp.setup({
 				end
 			end,
 			i = function(fallback)
-				if cmp.visible() then
-					cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
-				elseif vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
+				if vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
 					vim.api.nvim_feedkeys(t("<Plug>(ultisnips_jump_forward)"), "m", true)
+				elseif cmp.visible() then
+					cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
 				else
 					fallback()
 				end
@@ -52,10 +54,10 @@ cmp.setup({
 				end
 			end,
 			i = function(fallback)
-				if cmp.visible() then
-					cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
-				elseif vim.fn["UltiSnips#CanJumpBackwards"]() == 1 then
+				if vim.fn["UltiSnips#CanJumpBackwards"]() == 1 then
 					return vim.api.nvim_feedkeys(t("<Plug>(ultisnips_jump_backward)"), "m", true)
+				elseif cmp.visible() then
+					cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
 				else
 					fallback()
 				end
