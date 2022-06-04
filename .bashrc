@@ -55,3 +55,5 @@ TERM=xterm-256color
 export PATH=$HOME/.local/bin:$PATH
 export EDITOR=nvim
 export FZF_DEFAULT_COMMAND='rg --files --hidden'
+# Make GPG signing work in my terminal
+export GPG_TTY=$(tty)
