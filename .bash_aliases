@@ -6,7 +6,7 @@ alias grep='grep --color=auto'
 
 alias gs='git status'
 alias ga='git add'
-alias gc='git commit'
+alias gc='git commit -vv'
 alias gl='git llog'
 
 alias l='ls -CF'
