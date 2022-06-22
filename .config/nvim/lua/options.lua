@@ -50,3 +50,5 @@ vim.g.doge_doc_standard_cpp = "doxygen_javadoc_banner"
 vim.cmd([[
 let g:UltiSnipsSnippetDirectories = ["UltiSnips", "my_snippets"]
 ]])
+
+vim.g.c_syntax_for_h = 1
