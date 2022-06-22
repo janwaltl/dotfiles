@@ -27,3 +27,4 @@ alias dotalias='vim ~/.bash_aliases'
 alias dotupdate='fn_dotupdate'
 
 alias makecdb='compiledb -n make'
+alias ff='vim $(fzf)'
