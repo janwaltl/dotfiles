@@ -56,5 +56,9 @@ kmap("n", "<leader>hs", ":GitGutterStageHunk<CR>")
 kmap("n", "<leader>hu", ":GitGutterUndoHunk<CR>")
 -- File browser
 kmap("n", "<leader>t", "<cmd>NvimTreeToggle<cr>")
+-- Close quickfixes
+kmap("n", "<leader>c", ":windo lcl|ccl<CR>")
+-- Open manpage in new tab
+kmap("n", "<leader>K", "K<C-w>T")
 --- Doc generation
 vim.g.doge_mapping = "<leader>d"
