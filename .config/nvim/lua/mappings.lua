@@ -41,12 +41,14 @@ kmap("i", "<C-j>", "<esc>:m .+1<CR>==i", opts)
 kmap("i", "<C-k>", "<esc>:m .-2<CR>==i", opts)
 kmap("n", "<C-j>", ":m .+1<CR>==", opts)
 kmap("n", "<C-k>", ":m .-2<CR>==", opts)
--- Dashboard mappings
-kmap("n", "<Leader>fs", "<cmd>SessionSave<CR>", opts)
-kmap("n", "<Leader>fl", "<cmd>SessionLoad<CR>", opts)
-kmap("n", "<leader>ff", ":DashboardFindFile<CR>", opts)
-kmap("n", "<leader>fw", ":DashboardFindWord<CR>", opts)
-kmap("n", "<leader>fh", ":DashboardFindHistory<CR>", opts)
+-- FZF mappings
+kmap("n", "<leader>ff", ":Files<CR>", opts) --Search in files.
+kmap("n", "<leader>fg", ":GFiles<CR>", opts) --Search in git files.
+kmap("n", "<leader>fw", ":Rg<CR>", opts) -- Search via ripgrep for words.
+kmap("n", "<leader>fs", ":Snippets<CR>", opts) -- Search in snippets.
+kmap("n", "<leader>fc", ":Commits<CR>", opts) -- Search in git log.
+kmap("n", "<leader>fh", ":Commits<CR>", opts) -- Search in git history for this file.
+kmap("i", "<C-f>p", "<Plug>(fzf-complete-path)") -- Complete path in insert mode.
 -- Work with hunks
 vim.g.gitgutter_map_keys = 0
 kmap("n", "<leader>hp", ":GitGutterPrevHunk<CR>")

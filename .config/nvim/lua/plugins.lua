@@ -82,13 +82,6 @@ return packer.startup(function(use)
 		run = "./install --bin",
 	})
 	use("junegunn/fzf.vim")
-	-- Starting dashboard
-	use({
-		"glepnir/dashboard-nvim",
-		config = function()
-			require("config.dashboard")
-		end,
-	})
 	use({
 		"SirVer/ultisnips",
 		requires = { { "honza/vim-snippets", rtp = "." } },
