@@ -64,3 +64,7 @@ kmap("n", "<leader>c", ":windo lcl|ccl<CR>")
 kmap("n", "<leader>K", "K<C-w>T")
 --- Doc generation
 vim.g.doge_mapping = "<leader>d"
+--- Move around the current tab with easy motion
+kmap("n", "<leader>mf", "<Plug>(easymotion-overwin-f)")
+kmap("n", "<leader>ms", "<Plug>(easymotion-overwin-f2)")
+kmap("n", "<leader>mw", "<Plug>(easymotion-overwin-w)")
