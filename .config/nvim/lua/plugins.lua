@@ -135,7 +135,12 @@ return packer.startup(function(use)
 		end,
 	})
 	-- Pretty Notifications
-	use("rcarriga/nvim-notify")
+	use({
+		"rcarriga/nvim-notify",
+		config = function()
+			require("config.notify")
+		end,
+	})
 	-- Show function signature while typing arguments
 	use("ray-x/lsp_signature.nvim")
 	-- Install LSP servers
