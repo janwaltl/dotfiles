@@ -72,3 +72,5 @@ vim.g.EasyMotion_smartcase = 1
 vim.g.EasyMotion_do_mapping = 0
 vim.g.EasyMotion_use_upper = 1
 vim.g.EasyMotion_keys = "ABCDEGHILMNOPQRSTUVWXYZFJK"
+--- Notifications log
+kmap("n", "<leader>nl", ":Notifications<CR>")
