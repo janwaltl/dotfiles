@@ -65,6 +65,10 @@ kmap("n", "<leader>K", "K<C-w>T")
 --- Doc generation
 vim.g.doge_mapping = "<leader>d"
 --- Move around the current tab with easy motion
-kmap("n", "<leader>mf", "<Plug>(easymotion-overwin-f)")
-kmap("n", "<leader>ms", "<Plug>(easymotion-overwin-f2)")
-kmap("n", "<leader>mw", "<Plug>(easymotion-overwin-w)")
+kmap("n", "f", "<Plug>(easymotion-overwin-f)")
+kmap("n", "s", "<Plug>(easymotion-overwin-f2)")
+kmap("n", "<leader>w", "<Plug>(easymotion-overwin-w)")
+vim.g.EasyMotion_smartcase = 1
+vim.g.EasyMotion_do_mapping = 0
+vim.g.EasyMotion_use_upper = 1
+vim.g.EasyMotion_keys = "ABCDEGHILMNOPQRSTUVWXYZFJK"
