@@ -6,4 +6,10 @@ notify.setup()
 --Required
 vim.opt.termguicolors = true
 --Set as default notification function
-vim.notify = notify
+vim.notify = function(msg, ...)
+    if msg:match("warning: multiple different client offset_encodings") then
+        return
+    end
+
+    notify(msg, ...)
+end
