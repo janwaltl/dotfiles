@@ -13,6 +13,7 @@ You might be interest in [devenvsetup repo](https://github.com/janwaltl/devenvse
 3. Perform the steps below on your first run.
 
 **Versions**:
+
 - Tmux around 3.2a
 - Neovim 0.8+
 
@@ -20,6 +21,7 @@ Both are automatically installed through the devenvsetup too.
 
 # First run
 Both Tmux and Neovim need to manually install the plugins on first startup.
+
 ## Tmux
 1. Press "(CTRL-A)+I" to install plugins, give it a second, it does not print progress, the lower status bar should become much nicer.
 1. Restart tmux.
@@ -30,7 +32,9 @@ Both Tmux and Neovim need to manually install the plugins on first startup.
 
 # Plugins & Keybindings
 The lists below might not be always up-to-date, see the scripts themselves
+
 **Terminology:**
+
 - "-" = press together
 - "+" = consecutive
 - "[]" = alternatives, i.e. press one of them
@@ -97,12 +101,15 @@ Respects `.clang-format` for C/C++, Python uses black, yaml and other have stand
 ### File navigation
 
 **File search:**
+
 Pretty fast fuzzy search for files (or words in them) in the current subtree. 
 
 My main method of opening new files.
 
 [fzf.vim](https://github.com/junegunn/fzf.vim), requires fzf, ripgrep.
-In general:
+
+**In general:**
+
 1. press keybind
 1. popup window opens with the list of files
 1. enter your search query, files are searched on the fly
@@ -117,6 +124,7 @@ In general:
 - `<leader>+f+h` Search git log history, only commits relevant to the current file.
 
 **File browser:**
+
 [nvim-tree](https://github.com/nvim-tree/nvim-tree.lua).
 
 - Open/close with `<leader>+t`.
@@ -140,6 +148,7 @@ Standard vim commands + [easymotion](https://github.com/easymotion/vim-easymotio
 - Move between jump lists with `CTRL-o` or `CTRL-i`, also works for jump between files opened from the file browser.
 
 **Easymotion workflow:**
+
 1. Look at the place you want to jump, can be in another pane.
 1. Press `f`, `s`, followed by a single char, two chars, respectively. `<leader>+w` marks all words.
 1. All matches are highlighted, press the key(s) for the place you want to jump to. 
@@ -165,7 +174,8 @@ There is also linting via clang-tidy, `pylint` and others.
 - Do NOT run vim itself within activated `venv`.
 
 
-Navigation:
+**Navigation:**
+
 - `gD` - go to declaration.
 - `gd` - go to definition.
 - `gi` - go to implementation.
