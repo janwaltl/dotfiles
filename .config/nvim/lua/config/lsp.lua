@@ -74,3 +74,7 @@ lsp_installer.on_server_ready(function(server)
 	server:setup(opts)
 	vim.cmd([[ do User LspAttach Buffers ]])
 end)
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+require("lspconfig").clangd.setup({on_attach=common_on_attach, capabilities=capabilities})

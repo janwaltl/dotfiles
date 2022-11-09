@@ -18,7 +18,7 @@ null_ls.setup({
 		-- Rust
 		null_ls.builtins.formatting.rustfmt,
 		-- Lua
-		null_ls.builtins.formatting.stylua,
+		--null_ls.builtins.formatting.stylua,
 
 		-- Spell checking
 		null_ls.builtins.diagnostics.codespell.with({
