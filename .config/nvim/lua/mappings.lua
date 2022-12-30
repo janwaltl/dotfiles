@@ -20,6 +20,8 @@ kmap("n", "j", "gj", opts)
 kmap("n", "k", "gk", opts)
 -- Disable exec mode, run macros instead
 kmap("n", "Q", "@q", opts)
+-- Close buffer with single keystroke
+kmap("n", "q", ":q<CR>", {})
 -- Move between splits
 kmap("", "<leader>h", "<C-w>h", opts)
 kmap("", "<leader>j", "<C-w>j", opts)
@@ -28,8 +30,19 @@ kmap("", "<leader>l", "<C-w>l", opts)
 -- Move between tabs with gt,gb
 kmap("", "gb", "gT", opts)
 -- Move between buffers
-kmap("", "<leader>]", ":bnext<CR>", opts)
-kmap("", "<leader>[", ":bprev<CR>", opts)
+kmap("n", "[b", ":bprev<CR>", opts)
+kmap("n", "]b", ":bnext<CR>", opts)
+-- Location list
+kmap("n", "<leader>lo", ":botright lopen<CR>", opts)
+kmap("n", "<leader>ol", ":windo lclose<CR>", opts)
+kmap("n", "[l", ":lprev<CR>", opts)
+kmap("n", "]l", ":lnext<CR>", opts)
+-- Quickfix list
+kmap("n", "<leader>qo", ":botright copen<CR>", opts)
+kmap("n", "<leader>oq", ":windo cclose<CR>", opts)
+kmap("n", "[q", ":cprev<CR>", opts)
+kmap("n", "]q", ":cnext<CR>", opts)
+-- Clear highlights
 kmap("n", "<C-L>", ":nohls<CR>", opts)
 -- Center on search results
 kmap("n", "n", "nzz", opts)
@@ -47,19 +60,22 @@ kmap("n", "<leader>fg", ":GFiles<CR>", opts) --Search in git files.
 kmap("n", "<leader>fw", ":Rg<CR>", opts) -- Search via ripgrep for words.
 kmap("n", "<leader>fs", ":Snippets<CR>", opts) -- Search in snippets.
 kmap("n", "<leader>fc", ":Commits<CR>", opts) -- Search in git log.
-kmap("n", "<leader>fh", ":Commits<CR>", opts) -- Search in git history for this file.
+kmap("n", "<leader>fh", ":History<CR>", opts) -- Search in git history for this file.
 kmap("i", "<C-f>p", "<Plug>(fzf-complete-path)") -- Complete path in insert mode.
 -- Work with hunks
 vim.g.gitgutter_map_keys = 0
-kmap("n", "<leader>hp", ":GitGutterPrevHunk<CR>")
-kmap("n", "<leader>hn", ":GitGutterNextHunk<CR>")
+kmap("n", "[h", ":GitGutterPrevHunk<CR>")
+kmap("n", "]h", ":GitGutterNextHunk<CR>")
 kmap("n", "<leader>hr", ":GitGutterPreviewHunk<CR>")
 kmap("n", "<leader>hs", ":GitGutterStageHunk<CR>")
 kmap("n", "<leader>hu", ":GitGutterUndoHunk<CR>")
+-- Git fugitive
+kmap("n", "<leader>gs", ":Git<CR>")
+kmap("n", "<leader>gb", ":Git blame<CR>")
+kmap("n", "<leader>gm", ":Git merge<CR>")
+kmap("n", "<leader>gl", ":Git log<CR>")
 -- File browser
 kmap("n", "<leader>t", "<cmd>NvimTreeToggle<cr>")
--- Close quickfixes
-kmap("n", "<leader>c", ":windo lcl|ccl<CR>")
 -- Open manpage in new tab
 kmap("n", "<leader>K", "K<C-w>T")
 --- Doc generation
