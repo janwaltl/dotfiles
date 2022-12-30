@@ -13,7 +13,7 @@ null_ls.setup({
 
 		-- C/C++
 		-- Formatting is handled by clangd language server
-		-- null_ls.builtins.formatting.clang_format,
+		null_ls.builtins.formatting.clang_format,
 
 		-- Rust
 		null_ls.builtins.formatting.rustfmt,
@@ -26,8 +26,17 @@ null_ls.setup({
 		}),
 	},
 	on_attach = function(client)
-		if client.server_capabilities.documentFormattingProvider then
-			vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.format()")
+		if
+			-- The first one reports false positives for null-ls on files without formatters.
+			--client.server_capabilities.documentFormattingProvider or
+			client.supports_method("textDocument/formatting")
+		then
+			vim.cmd([[
+                augroup LspFormatting
+                autocmd! * <buffer>
+                autocmd BufWritePre <buffer> lua vim.lsp.buf.format()
+                augroup END
+                ]])
 		end
 	end,
 })
