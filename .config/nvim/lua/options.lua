@@ -52,3 +52,4 @@ let g:UltiSnipsSnippetDirectories = ["UltiSnips", "my_snippets"]
 ]])
 
 vim.g.c_syntax_for_h = 1
+vim.api.nvim_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")

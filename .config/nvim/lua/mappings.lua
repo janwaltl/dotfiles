@@ -90,3 +90,16 @@ vim.g.EasyMotion_use_upper = 1
 vim.g.EasyMotion_keys = "ABCDEGHILMNOPQRSTUVWXYZFJK"
 --- Notifications log
 kmap("n", "<leader>nl", ":Notifications<CR>")
+--- LSP code
+kmap("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
+kmap("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
+kmap("n", "gk", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
+kmap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+kmap("n", "<leader>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
+kmap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
+kmap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
+kmap("n", "<leader>ca", "<cmd>CodeActionMenu<CR>", opts)
+kmap("v", "<leader>ca", "<cmd>CodeActionMenu<CR>", opts)
+kmap("n", "ge", '<cmd>lua vim.diagnostic.open_float(0, { scope = "line", border = "single" })<CR>', opts)
+kmap("n", "g[", '<cmd>lua vim.diagnostic.goto_prev({ float =  { border = "single" }})<CR>', opts)
+kmap("n", "g]", '<cmd>lua vim.diagnostic.goto_next({ float =  { border = "single" }})<CR>', opts)

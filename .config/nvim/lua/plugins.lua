@@ -144,7 +144,8 @@ return packer.startup(function(use)
 	-- Show function signature while typing arguments
 	use("ray-x/lsp_signature.nvim")
 	-- Install LSP servers
-	use("williamboman/nvim-lsp-installer")
+	use("williamboman/mason.nvim")
+	use("williamboman/mason-lspconfig.nvim")
 	-- LSP in status line
 	use("nvim-lua/lsp-status.nvim")
 	-- language server settings defined in json for
@@ -160,7 +161,7 @@ return packer.startup(function(use)
 	use({
 		"neovim/nvim-lspconfig",
 		config = function()
-			require("config.lsp")
+			require("config.mason")
 		end,
 	})
 	-- Gitgutter - work with hunks from VIM

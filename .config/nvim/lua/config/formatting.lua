@@ -4,9 +4,9 @@ null_ls.setup({
 	sources = {
 		-- Python
 		null_ls.builtins.formatting.black,
-		null_ls.builtins.formatting.isort,
-		null_ls.builtins.diagnostics.pylint.with({ prefer_local = "venv/bin" }),
-		null_ls.builtins.diagnostics.pydocstyle,
+		null_ls.builtins.formatting.ruff,
+		null_ls.builtins.diagnostics.pylint.with({ prefer_local = ".venv/bin" }),
+		null_ls.builtins.diagnostics.ruff,
 
 		null_ls.builtins.diagnostics.ansiblelint,
 		null_ls.builtins.diagnostics.yamllint,
