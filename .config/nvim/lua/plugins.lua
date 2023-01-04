@@ -83,6 +83,11 @@ return packer.startup(function(use)
 	})
 	use("junegunn/fzf.vim")
 	use({
+		"nvim-telescope/telescope.nvim",
+		tag = "0.1.0",
+		requires = { { "nvim-lua/plenary.nvim" } },
+	})
+	use({
 		"SirVer/ultisnips",
 		requires = { { "honza/vim-snippets", rtp = "." } },
 		config = function()

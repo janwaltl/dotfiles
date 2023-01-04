@@ -55,13 +55,26 @@ kmap("i", "<C-k>", "<esc>:m .-2<CR>==i", opts)
 kmap("n", "<C-j>", ":m .+1<CR>==", opts)
 kmap("n", "<C-k>", ":m .-2<CR>==", opts)
 -- FZF mappings
-kmap("n", "<leader>ff", ":Files<CR>", opts) --Search in files.
-kmap("n", "<leader>fg", ":GFiles<CR>", opts) --Search in git files.
-kmap("n", "<leader>fw", ":Rg<CR>", opts) -- Search via ripgrep for words.
-kmap("n", "<leader>fs", ":Snippets<CR>", opts) -- Search in snippets.
-kmap("n", "<leader>fc", ":Commits<CR>", opts) -- Search in git log.
-kmap("n", "<leader>fh", ":History<CR>", opts) -- Search in git history for this file.
+kmap("n", "<leader>af", ":Files<CR>", opts) --Search in files.
+kmap("n", "<leader>ag", ":GFiles<CR>", opts) --Search in git files.
+kmap("n", "<leader>aw", ":Rg<CR>", opts) -- Search via ripgrep for words.
+kmap("n", "<leader>as", ":Snippets<CR>", opts) -- Search in snippets.
+kmap("n", "<leader>ac", ":Commits<CR>", opts) -- Search in git log.
+kmap("n", "<leader>ah", ":History<CR>", opts) -- Search in git history for this file.
 kmap("i", "<C-f>p", "<Plug>(fzf-complete-path)") -- Complete path in insert mode.
+--- Telescope mappings
+local builtin = require("telescope.builtin")
+vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
+vim.keymap.set("n", "<leader>fg", builtin.git_files, {})
+vim.keymap.set("n", "<leader>fw", builtin.live_grep, {})
+vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
+vim.keymap.set("n", "<leader>fm", builtin.man_pages, {})
+vim.keymap.set("n", "<leader>fq", builtin.quickfix, {})
+vim.keymap.set("n", "<leader>fl", builtin.loclist, {})
+vim.keymap.set("n", "<leader>fc", builtin.git_commits, {})
+vim.keymap.set("n", "<leader>fsr", builtin.lsp_references, {})
+--vim.keymap.set("n", "<leader>fsd", builtin.lsp_diagnostics, {})
+
 -- Work with hunks
 vim.g.gitgutter_map_keys = 0
 kmap("n", "[h", ":GitGutterPrevHunk<CR>")
