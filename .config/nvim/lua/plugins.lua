@@ -45,19 +45,9 @@ return packer.startup(function(use)
 	use("nvim-lua/plenary.nvim") -- Useful lua functions used by lots of plugins
 	use("antoinemadec/FixCursorHold.nvim") -- This is needed to fix lsp doc highlight
 	-- See which keys we can press while typing a command
-	use({
-		"folke/which-key.nvim",
-		config = function()
-			require("which-key").setup({})
-		end,
-	})
+	use("folke/which-key.nvim")
 	-- Insert matching braces, quotes automatically
-	use({
-		"windwp/nvim-autopairs",
-		config = function()
-			require("nvim-autopairs").setup({})
-		end,
-	})
+	use("windwp/nvim-autopairs")
 	-- Operate on pairs
 	use("tpope/vim-surround")
 	-- Make . work for plugin commands
@@ -66,12 +56,7 @@ return packer.startup(function(use)
 	-- Colorscheme
 	use("morhetz/gruvbox")
 	-- Status line
-	use({
-		"hoob3rt/lualine.nvim",
-		config = function()
-			require("lualine").setup({ options = { theme = "wombat" } })
-		end,
-	})
+	use("hoob3rt/lualine.nvim")
 	-- Integrate git
 	use("tpope/vim-fugitive")
 	-- Easier commenting
@@ -90,13 +75,6 @@ return packer.startup(function(use)
 	use({
 		"SirVer/ultisnips",
 		requires = { { "honza/vim-snippets", rtp = "." } },
-		config = function()
-			vim.g.UltiSnipsExpandTrigger = "<tab>"
-			vim.g.UltiSnipsJumpForwardTrigger = "<Plug>(ultisnips_jump_forward)"
-			vim.g.UltiSnipsJumpBackwardTrigger = "<Plug>(ultisnips_jump_backward)"
-			vim.g.UltiSnipsListSnippets = "<c-s><c-s>"
-			vim.g.UltiSnipsRemoveSelectModeMappings = 0
-		end,
 	})
 	-- Completion
 	use({
@@ -110,9 +88,6 @@ return packer.startup(function(use)
 			"quangnguyen30192/cmp-nvim-ultisnips",
 			"honza/vim-snippets",
 		},
-		config = function()
-			require("config.cmp")
-		end,
 	})
 	-- Treesitter
 	use({
@@ -121,31 +96,11 @@ return packer.startup(function(use)
 		requires = {
 			"nvim-treesitter/nvim-treesitter-textobjects",
 		},
-		config = function()
-			require("config.treesitter")
-		end,
 	})
 	-- File browser
-	use({
-		"kyazdani42/nvim-tree.lua",
-		config = function()
-			require("nvim-tree").setup({
-				update_focused_file = {
-					enable = true,
-				},
-				view = {
-					width = 40,
-				},
-			})
-		end,
-	})
+	use("kyazdani42/nvim-tree.lua")
 	-- Pretty Notifications
-	use({
-		"rcarriga/nvim-notify",
-		config = function()
-			require("config.notify")
-		end,
-	})
+	use("rcarriga/nvim-notify")
 	-- Show function signature while typing arguments
 	use("ray-x/lsp_signature.nvim")
 	-- Install LSP servers
@@ -156,19 +111,9 @@ return packer.startup(function(use)
 	-- language server settings defined in json for
 	use("tamago324/nlsp-settings.nvim")
 	-- Formatting, linting
-	use({
-		"jose-elias-alvarez/null-ls.nvim",
-		config = function()
-			require("config.formatting")
-		end,
-	})
+	use("jose-elias-alvarez/null-ls.nvim")
 	-- LSP
-	use({
-		"neovim/nvim-lspconfig",
-		config = function()
-			require("config.mason")
-		end,
-	})
+	use("neovim/nvim-lspconfig")
 	-- Gitgutter - work with hunks from VIM
 	use("airblade/vim-gitgutter")
 	-- Fancy icons
@@ -180,8 +125,9 @@ return packer.startup(function(use)
 			--vim.cmd("call doge#install()")
 		end,
 	})
-	-- Easy motion, navigation
+	-- Easy motion, leap for navigation
 	use("easymotion/vim-easymotion")
+	use("ggandor/leap.nvim")
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins

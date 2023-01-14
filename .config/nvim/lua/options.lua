@@ -39,17 +39,10 @@ for k, v in pairs(options) do
 	vim.opt[k] = v
 end
 
-vim.opt.number = true
-vim.opt.relativenumber = true
-
 -- Doge docstring format
 vim.g.doge_doc_standard_python = "numpy"
 vim.g.doge_enable_mappings = 1
 vim.g.doge_doc_standard_cpp = "doxygen_javadoc_banner"
--- Folder for snippets
-vim.cmd([[
-let g:UltiSnipsSnippetDirectories = ["UltiSnips", "my_snippets"]
-]])
-
+-- Completion
 vim.g.c_syntax_for_h = 1
 vim.api.nvim_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
