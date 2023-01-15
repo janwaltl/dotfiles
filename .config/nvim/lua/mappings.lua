@@ -74,7 +74,6 @@ kmap("n", "<C-k>", ":m .-2<CR>==", opts)
 kmap("n", "<leader>ff", ":Files<CR>", opts) --Search in files.
 kmap("n", "<leader>fg", ":GFiles<CR>", opts) --Search in git files.
 kmap("n", "<leader>fw", ":Rg<CR>", opts) -- Search via ripgrep for words.
-kmap("n", "<leader>fs", ":Snippets<CR>", opts) -- Search in snippets.
 kmap("n", "<leader>fc", ":Commits<CR>", opts) -- Search in git log.
 kmap("n", "<leader>fh", ":History<CR>", opts) -- Search in git history for this file.
 kmap("n", "<leader>fr", ":Lines<CR>", opts) -- Search lines in open files
@@ -84,6 +83,7 @@ kmap("i", "<C-f>p", "<Plug>(fzf-complete-path)") -- Complete path in insert mode
 local tel_builtin = require("telescope.builtin")
 vim.keymap.set("n", "<leader>fb", tel_builtin.buffers, {})
 vim.keymap.set("n", "<leader>fm", tel_builtin.man_pages, {})
+vim.keymap.set("n", "<leader>fs", tel_builtin.lsp_workspace_symbols, {})
 --vim.keymap.set("n", "<leader>fsd", tel_builtin.lsp_diagnostics, {})
 
 --------------------------------------------------------------------------------
