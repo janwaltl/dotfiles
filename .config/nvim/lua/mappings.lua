@@ -72,26 +72,21 @@ kmap("n", "<C-j>", ":m .+1<CR>==", {})
 kmap("n", "<C-k>", ":m .-2<CR>==", {})
 --------------------------------------------------------------------------------
 -- FZF mappings
-kmap("n", "<leader>ff", ":Files<CR>", { desc = "Search files" })
-kmap("n", "<leader>fg", ":GFiles<CR>", { desc = "Search git files" })
-kmap("n", "<leader>fw", ":Rg<CR>", { desc = "Search words" })
-kmap("n", "<leader>fc", ":Commits<CR>", { desc = "Search git log" })
-kmap("n", "<leader>fh", ":History<CR>", { desc = "Search in git history for this file" })
-kmap("n", "<leader>fr", ":Lines<CR>", { desc = "Search lines in open files" })
-kmap("i", "<C-f>p", "<Plug>(fzf-complete-path)", { desc = "Complete path" })
---------------------------------------------------------------------------------
--- Telescope mappings
-local tel_builtin = require("telescope.builtin")
-kmap("n", "<leader>fb", tel_builtin.buffers, { desc = "Fuzzy buffers" })
-kmap("n", "<leader>fm", tel_builtin.man_pages, { desc = "Fuzzy manpages" })
-kmap("n", "<leader>fs", tel_builtin.lsp_workspace_symbols, { desc = "Fuzzy symbols" })
---vim.keymap.set("n", "<leader>fsd", tel_builtin.lsp_diagnostics, {})
+kmap("n", "<leader>ff", ":FzfLua files<CR>", { desc = "Search files" })
+kmap("n", "<leader>fg", ":FzfLua git_files<CR>", { desc = "Search git files" })
+kmap("n", "<leader>fw", ":FzfLua grep_project<CR>", { desc = "Search words" })
+kmap("n", "<leader>fc", ":FzfLua git_commits<CR>", { desc = "Search git log" })
+kmap("n", "<leader>fh", ":FzfLua oldfiles<CR>", { desc = "Search recently opened files" })
+kmap("n", "<leader>fr", ":FzfLua lines<CR>", { desc = "Search lines in open files" })
+kmap("n", "<leader>fb", ":FzfLua buffers<CR>", { desc = "Fuzzy buffers" })
+kmap("n", "<leader>fm", ":FzfLua man_pages<CR>", { desc = "Fuzzy manpages" })
+kmap("n", "<leader>fs", ":FzfLua lsp_workspace_symbols<CR>", { desc = "Fuzzy symbols" })
 
 --------------------------------------------------------------------------------
 -- Work with hunks
 function hunk_quicklist()
 	vim.cmd(":GitGutterQuickFix")
-	tel_builtin.quickfix()
+	require("fzf-lua").quickfix()
 end
 kmap("n", "[h", ":GitGutterPrevHunk<CR>", { desc = "Previous hunk" })
 kmap("n", "]h", ":GitGutterNextHunk<CR>", { desc = "Next hunk" })
@@ -146,7 +141,8 @@ kmap("n", "gk", "<Cmd>lua vim.lsp.buf.hover()<CR>", { desc = "Hover symbol" })
 kmap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", { desc = "Go to implementation" })
 kmap("n", "<leader>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>", { desc = "Type definition" })
 kmap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", { desc = "Rename symbol" })
-kmap("n", "gr", tel_builtin.lsp_references, { desc = "List symbol references" })
+kmap("n", "gr", ":FzfLua lsp_references<CR>", { desc = "List symbol references" })
+kmap("n", "gc", ":FzfLua lsp_incoming_calls<CR>", { desc = "List symbol references" })
 kmap("n", "<leader>ca", "<cmd>CodeActionMenu<CR>", { desc = "Code action" })
 kmap(
 	"n",
@@ -166,9 +162,4 @@ kmap(
 	'<cmd>lua vim.diagnostic.goto_next({ float =  { border = "single" }})<CR>',
 	{ desc = "Next diagnostic" }
 )
-function diag_loclist()
-	vim.diagnostic.setloclist()
-	vim.cmd.lclose()
-	tel_builtin.loclist()
-end
-vim.keymap.set("n", "gl", diag_loclist, { desc = "List all diagnostic" })
+kmap("n", "gl", ":FzfLua lsp_workspace_diagnostics<CR>", { desc = "List all diagnostics" })

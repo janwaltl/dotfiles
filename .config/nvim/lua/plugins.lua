@@ -68,9 +68,9 @@ return packer.startup(function(use)
 	})
 	use("junegunn/fzf.vim")
 	use({
-		"nvim-telescope/telescope.nvim",
-		tag = "0.1.0",
-		requires = { { "nvim-lua/plenary.nvim" } },
+		"ibhagwan/fzf-lua",
+		-- optional for icon support
+		requires = { "nvim-tree/nvim-web-devicons" },
 	})
 	use({
 		"SirVer/ultisnips",
@@ -120,6 +120,8 @@ return packer.startup(function(use)
 	use("airblade/vim-gitgutter")
 	-- Fancy icons
 	use("kyazdani42/nvim-web-devicons")
+	-- Debugging
+	use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
 	-- Documentation generation
 	use({
 		"kkoomen/vim-doge",
