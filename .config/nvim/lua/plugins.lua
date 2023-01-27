@@ -72,8 +72,9 @@ return packer.startup(function(use)
 		-- optional for icon support
 		requires = { "nvim-tree/nvim-web-devicons" },
 	})
-	use({ "L3MON4D3/LuaSnip" })
-	use({ "honza/vim-snippets" })
+	use("L3MON4D3/LuaSnip")
+	use("honza/vim-snippets")
+	use("rafamadriz/friendly-snippets")
 	-- Completion
 	use({
 		"hrsh7th/nvim-cmp",

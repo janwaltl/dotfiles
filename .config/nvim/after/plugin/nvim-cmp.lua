@@ -18,6 +18,9 @@ cmp.setup({
 		completion = cmp.config.window.bordered(),
 		documentation = cmp.config.window.bordered(),
 	},
+	experimental = {
+		ghost_text = true,
+	},
 	mapping = cmp.mapping.preset.insert({
 		["<C-p>"] = cmp.mapping.select_prev_item(),
 		["<C-n>"] = cmp.mapping.select_next_item(),
@@ -60,6 +63,7 @@ cmp.setup({
 cmp.setup.filetype("gitcommit", {
 	sources = cmp.config.sources({
 		{ name = "cmp_git" }, -- You can specify the `cmp_git` source if you were installed it.
+		{ name = "luasnip" },
 	}, {
 		{ name = "buffer" },
 	}),
