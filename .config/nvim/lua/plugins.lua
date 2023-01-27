@@ -72,21 +72,18 @@ return packer.startup(function(use)
 		-- optional for icon support
 		requires = { "nvim-tree/nvim-web-devicons" },
 	})
-	use({
-		"SirVer/ultisnips",
-		requires = { { "honza/vim-snippets", rtp = "." } },
-	})
+	use({ "L3MON4D3/LuaSnip" })
+	use({ "honza/vim-snippets" })
 	-- Completion
 	use({
 		"hrsh7th/nvim-cmp",
 		requires = {
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
+			"hrsh7th/cmp-git",
 			"hrsh7th/cmp-cmdline",
 			"hrsh7th/cmp-nvim-lsp",
-			"SirVer/ultisnips",
-			"quangnguyen30192/cmp-nvim-ultisnips",
-			"honza/vim-snippets",
+			"saadparwaiz1/cmp_luasnip",
 		},
 	})
 	-- Treesitter
@@ -120,8 +117,6 @@ return packer.startup(function(use)
 	use("airblade/vim-gitgutter")
 	-- Fancy icons
 	use("kyazdani42/nvim-web-devicons")
-	-- Debugging
-	use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
 	-- Documentation generation
 	use({
 		"kkoomen/vim-doge",
