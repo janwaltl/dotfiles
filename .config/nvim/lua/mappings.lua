@@ -212,3 +212,6 @@ end, { desc = "Hover symbol" })
 kmap("n", "<leader>dlf", ":FzfLua dap_frames<CR>", { desc = "List DAP frames" })
 kmap("n", "<leader>dlv", ":FzfLua dap_variables<CR>", { desc = "List DAP variables" })
 kmap("n", "<leader>dlb", ":FzfLua dap_breakpoints<CR>", { desc = "List DAP breakpoints" })
+--------------------------------------------------------------------------------
+-- Undo tree
+kmap("n", "<leader>u", ":UndotreeToggle<CR>", { desc = "Undo tree" })
