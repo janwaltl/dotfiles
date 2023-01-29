@@ -110,7 +110,7 @@ return packer.startup(function(use)
 	use("nvim-lua/lsp-status.nvim")
 	-- language server settings defined in json for
 	use("tamago324/nlsp-settings.nvim")
-	-- Formatting, linting
+	-- Formatting, linting;
 	use("jose-elias-alvarez/null-ls.nvim")
 	-- LSP
 	use("neovim/nvim-lspconfig")
@@ -128,6 +128,10 @@ return packer.startup(function(use)
 	-- Easy motion, leap for navigation
 	use("easymotion/vim-easymotion")
 	use("ggandor/leap.nvim")
+	-- Debugging
+	use("mfussenegger/nvim-dap")
+	use("rcarriga/nvim-dap-ui")
+	use("theHamsta/nvim-dap-virtual-text")
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
