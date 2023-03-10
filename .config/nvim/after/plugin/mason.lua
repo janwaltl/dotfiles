@@ -1,14 +1,14 @@
 local mason = require("mason")
 local mason_lspconfig = require("mason-lspconfig")
 
-local lsp_config = require("lspconfig")
-local lsp_status = require("lsp-status")
-local lsp_signature = require("lsp_signature")
-
 mason.setup()
 mason_lspconfig.setup({
 	ensure_installed = { "clangd", "pyright", "rust_analyzer" },
 })
+
+local lsp_config = require("lspconfig")
+local lsp_status = require("lsp-status")
+local lsp_signature = require("lsp_signature")
 
 lsp_status.config({
 	status_symbol = "",
@@ -57,7 +57,8 @@ lsp_config.pyright.setup({
 	on_attach = common_on_attach,
 	capabilities = lsp_status.capabilities,
 	before_init = function(_, config)
-		config.settings.python.pythonPath = get_python_venv_path(config.root_dir)
+		config.root_dir = require("lspconfig.util").root_pattern("pyproject.toml")(config.root_dir)
+		config.settings.python.analysis.extraPaths = { config.root_dir }
 	end,
 })
 
