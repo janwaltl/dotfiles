@@ -102,10 +102,10 @@ kmap("x", "ih", "<Plug>(GitGutterTextObjectInnerVisual)", { desc = "Select in hu
 kmap("x", "ah", "<Plug>(GitGutterTextObjectOuterVisual)", { desc = "Select around hunk" })
 --------------------------------------------------------------------------------
 -- Git fugitive
-kmap("n", "<leader>gs", ":Git<CR>", { desc = "Git status" })
-kmap("n", "<leader>gb", ":Git blame<CR>", { desc = "Git blame" })
+kmap("n", "<leader>gs", ":Git<CR><C-w>T", { desc = "Git status (new tab)" })
+kmap("n", "<leader>gb", ":Git blame<CR>", { desc = "Git blame (side)" })
 kmap("n", "<leader>gm", ":Git merge<CR>", { desc = "Git merge" })
-kmap("n", "<leader>gl", ":Git log<CR>", { desc = "Git log" })
+kmap("n", "<leader>gl", ":Gllog<CR>", { desc = "Git log" })
 --------------------------------------------------------------------------------
 -- File browser
 kmap("n", "<leader>t", "<cmd>NvimTreeToggle<cr>", { desc = "Toggle file explorer" })
