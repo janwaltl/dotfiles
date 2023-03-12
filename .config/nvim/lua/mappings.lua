@@ -81,6 +81,7 @@ kmap("n", "<leader>fc", ":FzfLua git_commits<CR>", { desc = "Search git log" })
 kmap("n", "<leader>fh", ":FzfLua oldfiles<CR>", { desc = "Search recently opened files" })
 kmap("n", "<leader>fr", ":FzfLua lines<CR>", { desc = "Search lines in open files" })
 kmap("n", "<leader>fb", ":FzfLua buffers<CR>", { desc = "Fuzzy buffers" })
+kmap("n", "<leader>ff", ":FzfLua tabs<CR>", { desc = "Search tabs" })
 kmap("n", "<leader>fm", ":FzfLua man_pages<CR>", { desc = "Fuzzy manpages" })
 kmap("n", "<leader>fs", ":FzfLua lsp_workspace_symbols<CR>", { desc = "Fuzzy symbols" })
 
