@@ -138,12 +138,12 @@ vim.g.EasyMotion_keys = "ABCDEGHILMNOPQRSTUVWXYZFJK"
 kmap("n", "<leader>nl", ":Notifications<CR>", { desc = "List notifications" })
 --------------------------------------------------------------------------------
 -- LSP code navigation
-kmap("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", { desc = "Go to declaration" })
-kmap("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", { desc = "Go to definition" })
-kmap("n", "gk", "<Cmd>lua vim.lsp.buf.hover()<CR>", { desc = "Hover symbol" })
-kmap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", { desc = "Go to implementation" })
-kmap("n", "<leader>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>", { desc = "Type definition" })
-kmap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", { desc = "Rename symbol" })
+kmap("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
+kmap("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
+kmap("n", "gk", vim.lsp.buf.hover, { desc = "Hover symbol" })
+kmap("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
+kmap("n", "<leader>D", vim.lsp.buf.type_definition, { desc = "Type definition" })
+kmap("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename symbol" })
 kmap("n", "gr", ":FzfLua lsp_references<CR>", { desc = "List symbol references" })
 kmap("n", "gc", ":FzfLua lsp_incoming_calls<CR>", { desc = "List symbol references" })
 kmap("n", "<leader>ca", "<cmd>CodeActionMenu<CR>", { desc = "Code action" })

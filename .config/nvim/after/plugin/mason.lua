@@ -3,7 +3,7 @@ local mason_lspconfig = require("mason-lspconfig")
 
 mason.setup()
 mason_lspconfig.setup({
-	ensure_installed = { "clangd", "pyright", "rust_analyzer" },
+	ensure_installed = { "rust_analyzer", "ruff_lsp", "pyright" },
 })
 
 local lsp_config = require("lspconfig")
@@ -60,6 +60,10 @@ lsp_config.pyright.setup({
 		config.root_dir = require("lspconfig.util").root_pattern("pyproject.toml")(config.root_dir)
 		config.settings.python.analysis.extraPaths = { config.root_dir }
 	end,
+})
+lsp_config.ruff_lsp.setup({
+	on_attach = common_on_attach,
+	capabilities = lsp_status.capabilities,
 })
 
 -- Source of diagnostics messages
