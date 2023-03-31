@@ -146,25 +146,16 @@ kmap("n", "<leader>D", vim.lsp.buf.type_definition, { desc = "Type definition" }
 kmap("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename symbol" })
 kmap("n", "gr", ":FzfLua lsp_references<CR>", { desc = "List symbol references" })
 kmap("n", "gc", ":FzfLua lsp_incoming_calls<CR>", { desc = "List symbol references" })
-kmap("n", "<leader>ca", "<cmd>CodeActionMenu<CR>", { desc = "Code action" })
-kmap(
-	"n",
-	"ge",
-	'<cmd>lua vim.diagnostic.open_float(0, { scope = "line", border = "single" })<CR>',
-	{ desc = "Diagnostic under cursor" }
-)
-kmap(
-	"n",
-	"[g",
-	'<cmd>lua vim.diagnostic.goto_prev({ float =  { border = "single" }})<CR>',
-	{ desc = "Previous diagnostic" }
-)
-kmap(
-	"n",
-	"]g",
-	'<cmd>lua vim.diagnostic.goto_next({ float =  { border = "single" }})<CR>',
-	{ desc = "Next diagnostic" }
-)
+kmap("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code action" })
+kmap("n", "ge", function()
+	vim.diagnostic.open_float(0, { scope = "line", border = "single" })
+end, { desc = "Diagnostic under cursor" })
+kmap("n", "[g", function()
+	vim.diagnostic.goto_prev({ float = { border = "single" } })
+end, { desc = "Previous diagnostic" })
+kmap("n", "]g", function()
+	vim.diagnostic.goto_next({ float = { border = "single" } })
+end, { desc = "Next diagnostic" })
 kmap("n", "gl", ":FzfLua lsp_workspace_diagnostics<CR>", { desc = "List all diagnostics" })
 --------------------------------------------------------------------------------
 -- Debugging
