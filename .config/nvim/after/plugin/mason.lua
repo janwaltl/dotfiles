@@ -53,11 +53,25 @@ lsp_config.rust_analyzer.setup({
 	capabilities = lsp_status.capabilities,
 })
 
+-- Override pyright root_dir generation
+-- I also want to recognize project via venv,.venv dirs
+local pyright_server_cfg = require("lspconfig.server_configurations.pyright")
+local py_root_files = {
+	"pyproject.toml",
+	"setup.py",
+	"setup.cfg",
+	"requirements.txt",
+	"pyrightconfig.json",
+	"venv",
+	".venv",
+}
+pyright_server_cfg.default_config.root_dir = require("lspconfig.util").root_pattern(unpack(py_root_files))
+
 lsp_config.pyright.setup({
 	on_attach = common_on_attach,
 	capabilities = lsp_status.capabilities,
 	before_init = function(_, config)
-		config.root_dir = require("lspconfig.util").root_pattern("pyproject.toml")(config.root_dir)
+		config.settings.python.pythonPath = get_python_venv_path(config.root_dir)
 		config.settings.python.analysis.extraPaths = { config.root_dir }
 	end,
 })
