@@ -11,6 +11,11 @@ null_ls.setup({
 		-- C/C++
 		-- Formatting is handled by clangd language server
 		null_ls.builtins.formatting.clang_format,
+		-- Markdown
+		null_ls.builtins.formatting.mdformat.with({
+			-- "Filename is required by null_ls", I also want wrapping to 80.
+			args = { "--wrap", "80", "$FILENAME" },
+		}),
 
 		-- Rust
 		null_ls.builtins.formatting.rustfmt,
