@@ -4,6 +4,7 @@ null_ls.setup({
 	sources = {
 		-- Python
 		null_ls.builtins.formatting.black,
+		null_ls.builtins.diagnostics.pydocstyle,
 
 		null_ls.builtins.diagnostics.ansiblelint,
 		null_ls.builtins.diagnostics.yamllint,
@@ -21,6 +22,8 @@ null_ls.setup({
 		null_ls.builtins.formatting.rustfmt,
 		-- Lua
 		null_ls.builtins.formatting.stylua,
+		-- JSON
+		null_ls.builtins.formatting.jq,
 
 		-- Spell checking
 		null_ls.builtins.diagnostics.codespell.with({
