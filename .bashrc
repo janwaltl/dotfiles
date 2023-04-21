@@ -63,3 +63,7 @@ export EDITOR=nvim
 export FZF_DEFAULT_COMMAND='rg --files --hidden'
 # Make GPG signing work in my terminal
 export GPG_TTY=$(tty)
+
+# Use vim bindings for cmdline
+set -o vi
+bind '"jk":vi-movement-mode'
