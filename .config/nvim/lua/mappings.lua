@@ -83,7 +83,9 @@ kmap("n", "<leader>fl", ":FzfLua lines<CR>", { desc = "Search lines in open file
 kmap("n", "<leader>fb", ":FzfLua buffers<CR>", { desc = "Fuzzy buffers" })
 kmap("n", "<leader>ft", ":FzfLua tabs<CR>", { desc = "Search tabs" })
 kmap("n", "<leader>fm", ":FzfLua man_pages<CR>", { desc = "Fuzzy manpages" })
-kmap("n", "<leader>fs", ":FzfLua lsp_workspace_symbols<CR>", { desc = "Fuzzy symbols" })
+kmap("n", "<leader>fs", ":FzfLua lsp_workspace_symbols<CR>", { desc = "Fuzzy workspace symbols" })
+kmap("n", "<leader>fS", ":FzfLua lsp_document_symbols<CR>", { desc = "Fuzzy document symbols" })
+kmap("n", "<leader>fo", ":FzfLua builtin<CR>", { desc = "Other fzf lua commands" })
 kmap("n", "<leader>fr", ":FzfLua resume<CR>", { desc = "Resume last fzf search" })
 
 --------------------------------------------------------------------------------
