@@ -67,3 +67,6 @@ export GPG_TTY=$(tty)
 # Use vim bindings for cmdline
 set -o vi
 bind '"jk":vi-movement-mode'
+
+# Init Rust
+. "$HOME/.cargo/env"
