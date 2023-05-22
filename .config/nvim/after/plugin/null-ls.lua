@@ -28,7 +28,7 @@ null_ls.setup({
 
 		-- Spell checking
 		null_ls.builtins.diagnostics.codespell.with({
-			args = { "--builtin", "clear,rare,code", "-L", "mut,stdio", "-" },
+			args = { "--builtin", "clear,rare,code", "-L", "mut,stdio,crate", "-" },
 		}),
 	},
 	on_attach = function(client)
