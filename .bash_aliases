@@ -21,7 +21,9 @@ function fn_dotupdate() {
 	git pull
 	popd
 }
-function fn_tmux_fzf(){
+
+# Start new tmux session from a folder
+function tff(){
 	if [[ $# -eq 1 ]]; then
 	    selected=$1
 	else
@@ -48,11 +50,38 @@ function fn_tmux_fzf(){
 	tmux attach -t $selected_name
 }
 
+# Open file with editor
+function ff() {
+  IFS=$'\n' files=($(fzf-tmux --query="$1" --multi --select-1 --exit-0))
+  [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
+}
+
+# Cd to selected directory
+fd() {
+  local dir
+  dir=$(find ${1:-.} -path '*/\.*' -prune \
+                  -o -type d -print 2> /dev/null | fzf +m) &&
+  cd "$dir"
+}
+
+# using ripgrep combined with preview
+# find-in-file - usage: fif <searchTerm>
+fif() {
+  if [ ! "$#" -gt 0 ]; then echo "Need a string to search for!"; return 1; fi
+  rg --files-with-matches --no-messages "$1" | fzf --preview "highlight -O ansi -l {} 2> /dev/null | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || rg --ignore-case --pretty --context 10 '$1' {}"
+}
+
+# fbr - checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
+fbr() {
+  local branches branch
+  branches=$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)") &&
+  branch=$(echo "$branches" |
+           fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
+  git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+}
+
 alias dotvim='vim ~/.config/nvim/'
 alias dotbash='vim ~/.bashrc'
 alias dotalias='vim ~/.bash_aliases'
 alias dotupdate='fn_dotupdate'
 
-alias makecdb='compiledb -n make'
-alias ff='vim $(fzf)'
-alias tff='fn_tmux_fzf'

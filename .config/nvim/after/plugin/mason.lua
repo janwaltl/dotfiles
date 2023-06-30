@@ -3,7 +3,7 @@ local mason_lspconfig = require("mason-lspconfig")
 
 mason.setup()
 mason_lspconfig.setup({
-	ensure_installed = { "rust_analyzer", "ruff_lsp", "pyright" },
+	ensure_installed = { "rust_analyzer", "ruff_lsp" },
 })
 
 local lsp_config = require("lspconfig")
