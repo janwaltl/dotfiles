@@ -18,6 +18,8 @@ lsp_status.config({
 local common_on_attach = function(client, bufnr)
 	lsp_status.on_attach(client)
 	lsp_signature.on_attach({ floating_window_above_cur_line = true })
+	-- Enable inlay hints
+	vim.lsp.buf.inlay_hint(bufnr, true)
 end
 local function get_python_venv_path(workspace)
 	local util = require("lspconfig/util")
