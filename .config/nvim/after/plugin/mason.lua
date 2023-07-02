@@ -17,7 +17,9 @@ lsp_status.config({
 local common_on_attach = function(client, bufnr)
 	lsp_status.on_attach(client)
 	-- Enable inlay hints
-	vim.lsp.buf.inlay_hint(bufnr, true)
+	if client.server_capabilities.inlayHintProvider then
+		vim.lsp.buf.inlay_hint(bufnr, true)
+	end
 end
 local function get_python_venv_path(workspace)
 	local util = require("lspconfig/util")
