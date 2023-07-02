@@ -8,7 +8,6 @@ mason_lspconfig.setup({
 
 local lsp_config = require("lspconfig")
 local lsp_status = require("lsp-status")
-local lsp_signature = require("lsp_signature")
 
 lsp_status.config({
 	status_symbol = "",
@@ -17,7 +16,6 @@ lsp_status.config({
 
 local common_on_attach = function(client, bufnr)
 	lsp_status.on_attach(client)
-	lsp_signature.on_attach({ floating_window_above_cur_line = true })
 	-- Enable inlay hints
 	vim.lsp.buf.inlay_hint(bufnr, true)
 end

@@ -99,8 +99,6 @@ return packer.startup(function(use)
 	use("kyazdani42/nvim-tree.lua")
 	-- Pretty Notifications
 	use("rcarriga/nvim-notify")
-	-- Show function signature while typing arguments
-	use("ray-x/lsp_signature.nvim")
 	-- Illuminate symbol usage
 	use("RRethy/vim-illuminate")
 	-- Install LSP servers
