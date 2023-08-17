@@ -82,6 +82,8 @@ lsp_config.ruff_lsp.setup({
 	capabilities = lsp_status.capabilities,
 })
 
+lsp_config.gopls.setup({})
+
 -- Source of diagnostics messages
 vim.diagnostic.config({
 	virtual_text = { prefix = "●" },

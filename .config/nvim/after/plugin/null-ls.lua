@@ -25,6 +25,8 @@ null_ls.setup({
 		-- JSON
 		null_ls.builtins.formatting.jq,
 		null_ls.builtins.formatting.yamlfmt,
+		-- Golang
+		null_ls.builtins.formatting.golines,
 
 		-- Spell checking
 		null_ls.builtins.diagnostics.codespell.with({
