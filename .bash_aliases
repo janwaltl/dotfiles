@@ -84,4 +84,6 @@ alias dotvim='vim ~/.config/nvim/'
 alias dotbash='vim ~/.bashrc'
 alias dotalias='vim ~/.bash_aliases'
 alias dotupdate='fn_dotupdate'
+# Copy current hash to clipboard and print to stderr.
+alias gh='git rev-parse HEAD | tee /dev/fd/2 | xclip -selection c'
 
