@@ -48,3 +48,5 @@ vim.g.c_syntax_for_h = 1
 vim.api.nvim_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 -- Undotree
 vim.g.undotree_SplitWidth = 40
+-- ISAR paths
+vim.opt.path:append("out/*")
