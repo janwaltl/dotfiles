@@ -13,6 +13,7 @@
 	autoSquash = true
 [merge]
 	conflictstyle = diff3
+	tool = nvimdiff
 # Enforce SSH
 [url "ssh://git@github.com/"]
   insteadOf = https://github.com/
