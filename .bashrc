@@ -61,6 +61,7 @@ TERM=xterm-256color
 export PATH=$HOME/.local/bin:$PATH
 export PATH=$PATH:/usr/local/go/bin
 export EDITOR=nvim
+export MANPAGER='nvim +Man!'
 export FZF_DEFAULT_COMMAND='rg --files --hidden'
 # Make GPG signing work in my terminal
 export GPG_TTY=$(tty)
