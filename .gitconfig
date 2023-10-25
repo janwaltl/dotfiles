@@ -29,6 +29,16 @@
 [diff]
 	# Better diffs for code
 	algorithm = histogram
+[mergetool]
+	# Clean up backup files created by merge tools on tool exit
+	keepBackup = false
+	# Clean up temp files created by merge tools on tool exit
+	keepTemporaries = false
+	# Put the temp files in a dedicated dir anyway
+	writeToTemp = true
+[status]
+	# Display submodule rev change summaries in status
+	submoduleSummary = true
 # Enforce SSH
 [url "ssh://git@github.com/"]
   insteadOf = https://github.com/
