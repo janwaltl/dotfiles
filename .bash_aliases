@@ -75,11 +75,21 @@ fd() {
   exec_with_history cd "$dir"
 }
 
-# using ripgrep combined with preview
-# find-in-file - usage: fif <searchTerm>
+# Find in files
 fif() {
-  if [ ! "$#" -gt 0 ]; then echo "Need a string to search for!"; return 1; fi
-  rg --files-with-matches --no-messages "$1" | fzf --preview "highlight -O ansi -l {} 2> /dev/null | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || rg --ignore-case --pretty --context 10 '$1' {}"
+	RG_DEFAULT_COMMAND="rg -i -l --hidden"
+	selected=$(
+	FZF_DEFAULT_COMMAND="rg --files" fzf \
+	  -m \
+	  -e \
+	  --ansi \
+	  --disabled \
+	  --reverse \
+	  --bind "ctrl-a:select-all" \
+	  --bind "f12:execute-silent:(subl -b {})" \
+	  --bind "change:reload:$RG_DEFAULT_COMMAND {q} || true" \
+	  --preview "rg -i --pretty --context 2 {q} {}" | cut -d":" -f1,2
+	)
 }
 
 # fbr - checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
