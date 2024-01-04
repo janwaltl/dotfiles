@@ -75,7 +75,7 @@ fd() {
   exec_with_history cd "$dir"
 }
 
-# Find in files
+# Find in files, open in VIM
 fif() {
 	RG_DEFAULT_COMMAND="rg -i -l --hidden"
 	selected=$(
@@ -90,6 +90,8 @@ fif() {
 	  --bind "change:reload:$RG_DEFAULT_COMMAND {q} || true" \
 	  --preview "rg -i --pretty --context 2 {q} {}" | cut -d":" -f1,2
 	)
+
+	exec_with_history ${EDITOR:-vim} "${files[@]}"
 }
 
 # fbr - checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
