@@ -16,10 +16,17 @@ alias ls='ls --color=auto'
 
 alias reload='source ~/.bashrc'
 
+alias vim='nvim'
+
 function fn_dotupdate() {
 	pushd ~/.dotfiles
 	git pull
 	popd
+}
+
+function exec_with_history(){
+	history -s ${@}
+	$@
 }
 
 # Start new tmux session from a folder
@@ -52,8 +59,11 @@ function tff(){
 
 # Open file with editor
 function ff() {
-  IFS=$'\n' files=($(fzf-tmux --query="$1" --multi --select-1 --exit-0))
-  [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
+  files=($(fzf-tmux --query="$1" --multi --select-1 --exit-0))
+
+  if [[ -n "$files" ]]; then
+	exec_with_history ${EDITOR:-vim} "${files[@]}"
+  fi
 }
 
 # Cd to selected directory
@@ -61,7 +71,8 @@ fd() {
   local dir
   dir=$(find ${1:-.} -path '*/\.*' -prune \
                   -o -type d -print 2> /dev/null | fzf +m) &&
-  cd "$dir"
+
+  exec_with_history cd "$dir"
 }
 
 # using ripgrep combined with preview
@@ -77,7 +88,7 @@ fbr() {
   branches=$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)") &&
   branch=$(echo "$branches" |
            fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
-  git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+  exec_with_history git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
 
 alias dotvim='vim ~/.config/nvim/'
