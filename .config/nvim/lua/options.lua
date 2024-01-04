@@ -39,6 +39,9 @@ for k, v in pairs(options) do
 	vim.opt[k] = v
 end
 
+-- Map leader to space
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 -- Doge docstring format
 vim.g.doge_doc_standard_python = "numpy"
 vim.g.doge_enable_mappings = 1
@@ -50,3 +53,5 @@ vim.api.nvim_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 vim.g.undotree_SplitWidth = 40
 -- ISAR paths
 vim.opt.path:append("out/*")
+-- Gitgutte
+vim.g.gitgutter_map_keys = 0
