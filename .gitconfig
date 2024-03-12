@@ -1,8 +1,15 @@
 [user]
 	email = waltl.jan@gmail.com
 	name = Jan Waltl
+[push]
+	# create remote branches on push
+	autoSetupRemote = true
 [pull]
+	# Rebase instead of merge pulls, I hate those merge commits
 	rebase = true
+[commit]
+	# Show diff to commit editor
+	verbose = true
 [alias]
 	# Credits https://stackoverflow.com/a/9074343/7691729
 	llog = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
@@ -11,9 +18,17 @@
 [rebase]
 	# Automatically apply "squash!", "fixup!" etc. actions on rebase -i.
 	autoSquash = true
+	# automatically stash and reapply uncommitted changes when rebasing
+	autoStash = true
+	# update branches which are part of rebased commits
+	updateRefs = true
 [merge]
 	conflictstyle = diff3
 	tool = nvimdiff
+	keepbackup = false
+[diff]
+	# Better diffs for code
+	algorithm = histogram
 # Enforce SSH
 [url "ssh://git@github.com/"]
   insteadOf = https://github.com/
