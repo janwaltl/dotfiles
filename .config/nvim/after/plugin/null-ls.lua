@@ -18,8 +18,6 @@ null_ls.setup({
 			args = { "--wrap", "80", "$FILENAME" },
 		}),
 
-		-- Rust
-		null_ls.builtins.formatting.rustfmt,
 		-- Lua
 		null_ls.builtins.formatting.stylua,
 		-- JSON

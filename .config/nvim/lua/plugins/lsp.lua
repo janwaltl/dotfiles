@@ -1,8 +1,16 @@
 local common_on_attach = function(client, bufnr)
 	require("lsp-status").on_attach(client)
 	-- Enable inlay hints
-	if client.server_capabilities.inlayHintProvider then
+	if client.server_capabilities.inlayHintProvider and vim.lsp.buf.inlay_hint then
 		vim.lsp.buf.inlay_hint(bufnr, true)
+	end
+	if client.supports_method("textDocument/formatting") then
+		vim.cmd([[
+			augroup LspFormatting
+			autocmd! * <buffer>
+			autocmd BufWritePre <buffer> lua vim.lsp.buf.format()
+			augroup END
+			]])
 	end
 end
 
