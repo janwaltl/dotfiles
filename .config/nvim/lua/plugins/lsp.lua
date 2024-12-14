@@ -1,10 +1,11 @@
 local common_on_attach = function(client, bufnr)
 	require("lsp-status").on_attach(client)
 	-- Enable inlay hints
-	if client.server_capabilities.inlayHintProvider and vim.lsp.buf.inlay_hint then
-		vim.lsp.buf.inlay_hint(bufnr, true)
+	if client.server_capabilities.inlayHintProvider or
+		client.server_capabilities.clangdInlayHintsProvider then
+		vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 	end
-	if client.supports_method("textDocument/formatting") then
+	if client.supports_method("textDocument/formatting") or true then
 		vim.cmd([[
 			augroup LspFormatting
 			autocmd! * <buffer>
@@ -14,7 +15,7 @@ local common_on_attach = function(client, bufnr)
 	end
 end
 
-local function get_python_venv_path(workspace)
+local function get_python_venv_path(root_dir)
 	local util = require("lspconfig/util")
 	local path = util.path
 	-- Use activated virtualenv.
@@ -22,16 +23,16 @@ local function get_python_venv_path(workspace)
 		return path.join(vim.env.VIRTUAL_ENV, "bin", "python")
 	end
 
-	-- Find and use virtualenv in workspace directory.
-	for _, pattern in ipairs({ "*", ".*" }) do
-		local match = vim.fn.glob(path.join(workspace, pattern, "venv"))
-		if match ~= "" then
-			return path.join(match, "bin", "python")
+	for _, venv in ipairs({ "venv", ".venv" }) do
+		local venv_python = path.join(root_dir, venv, "bin", "python")
+		local f = vim.loop.fs_stat(venv_python)
+		if f and f.type == 'file' then
+			return venv_python
 		end
 	end
 
 	-- Fallback to system Python.
-	return exepath("python3") or exepath("python") or "python"
+	return vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
 end
 
 local function lspstatus_config()
@@ -48,7 +49,18 @@ local function lspconfig_config()
 
 	lsp_config.clangd.setup({
 		handlers = lsp_status.extensions.clangd.setup(),
+		cmd = {
+			"clangd",
+			"--background-index",
+			"--clang-tidy",
+			"--header-insertion=iwyu",
+			"--completion-style=detailed",
+			"--function-arg-placeholders",
+			"--fallback-style=llvm",
+		},
 		init_options = {
+			usePlaceholders = true,
+			completeUnimported = true,
 			clangdFileStatus = true,
 		},
 		on_attach = common_on_attach,
@@ -60,9 +72,10 @@ local function lspconfig_config()
 		capabilities = lsp_status.capabilities,
 	})
 
-	-- Override pyright root_dir generation
-	-- I also want to recognize project via venv,.venv dirs
-	local pyright_server_cfg = require("lspconfig.server_configurations.pyright")
+	lsp_config.lua_ls.setup({
+		on_attach = common_on_attach,
+		capabilities = lsp_status.capabilities,
+	})
 	local py_root_files = {
 		"pyproject.toml",
 		"setup.py",
@@ -72,19 +85,28 @@ local function lspconfig_config()
 		"venv",
 		".venv",
 	}
-	pyright_server_cfg.default_config.root_dir = require("lspconfig.util").root_pattern(unpack(py_root_files))
 
-	lsp_config.pyright.setup({
+	lsp_config.basedpyright.setup({
 		on_attach = common_on_attach,
 		capabilities = lsp_status.capabilities,
+		-- Override pyright root_dir generation
+		-- I also want to recognize project via venv,.venv dirs
+		root_dir = function(fname)
+			local util = require("lspconfig/util")
+			return util.root_pattern(unpack(py_root_files))(fname)
+		end,
 		before_init = function(_, config)
-			config.settings.python.pythonPath = get_python_venv_path(config.root_dir)
-			config.settings.python.analysis.extraPaths = { config.root_dir }
+			config.settings.python = { pythonPath = get_python_venv_path(config.root_dir) }
 		end,
 	})
-	lsp_config.ruff_lsp.setup({
+
+	lsp_config.ruff.setup({
 		on_attach = common_on_attach,
 		capabilities = lsp_status.capabilities,
+		root_dir = function(fname)
+			local util = require("lspconfig/util")
+			return util.root_pattern(unpack(py_root_files))(fname)
+		end,
 	})
 
 	lsp_config.gopls.setup({})

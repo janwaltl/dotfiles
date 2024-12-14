@@ -1,4 +1,4 @@
-function dap_config()
+local function dap_config()
 	local dap = require("dap")
 	local dapui = require("dapui")
 	local dapvtext = require("nvim-dap-virtual-text")

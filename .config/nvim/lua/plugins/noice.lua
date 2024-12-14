@@ -1,4 +1,4 @@
-function noice_config()
+local function noice_config()
 	require("noice").setup({
 		lsp = {
 			-- override markdown rendering so that **cmp** and other plugins use **Treesitter**

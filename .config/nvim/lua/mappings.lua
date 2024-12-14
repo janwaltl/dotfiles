@@ -3,7 +3,7 @@
 --  - nvim-cmp.lua in particular.
 
 --Keyremap function with extra common options
-function kmap(mode, lhs, rhs, opts)
+local function kmap(mode, lhs, rhs, opts)
 	local options = { noremap = true, silent = true }
 	if opts then
 		options = vim.tbl_extend("force", options, opts)
@@ -93,6 +93,7 @@ function hunk_quicklist()
 	vim.cmd(":GitGutterQuickFix")
 	require("fzf-lua").quickfix()
 end
+
 kmap("n", "[h", ":GitGutterPrevHunk<CR>", { desc = "Previous hunk" })
 kmap("n", "]h", ":GitGutterNextHunk<CR>", { desc = "Next hunk" })
 kmap("n", "<leader>hr", ":GitGutterPreviewHunk<CR>", { desc = "Preview hunk" })
@@ -127,6 +128,7 @@ function leap_search()
 		end, vim.api.nvim_tabpage_list_wins(0)),
 	})
 end
+
 kmap("n", "s", leap_search, { desc = "Leap on 2 characters" })
 kmap("n", ",f", "<Plug>(easymotion-overwin-f)", { desc = "Search 1 characters" })
 kmap("n", ",s", "<Plug>(easymotion-overwin-f2)", { desc = "Search 2 characters" })
