@@ -62,7 +62,7 @@ local function lspconfig_config()
 
 	-- Override pyright root_dir generation
 	-- I also want to recognize project via venv,.venv dirs
-	local pyright_server_cfg = require("lspconfig.server_configurations.pyright")
+	local pyright_server_cfg = require("lspconfig.configs.pyright")
 	local py_root_files = {
 		"pyproject.toml",
 		"setup.py",
@@ -82,7 +82,7 @@ local function lspconfig_config()
 			config.settings.python.analysis.extraPaths = { config.root_dir }
 		end,
 	})
-	lsp_config.ruff_lsp.setup({
+	lsp_config.ruff.setup({
 		on_attach = common_on_attach,
 		capabilities = lsp_status.capabilities,
 	})
