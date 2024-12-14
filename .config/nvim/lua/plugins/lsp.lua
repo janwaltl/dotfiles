@@ -59,6 +59,10 @@ local function lspconfig_config()
 		on_attach = common_on_attach,
 		capabilities = lsp_status.capabilities,
 	})
+	lsp_config.jsonls.setup({
+		on_attach = common_on_attach,
+		capabilities = lsp_status.capabilities,
+	})
 
 	-- Override pyright root_dir generation
 	-- I also want to recognize project via venv,.venv dirs
