@@ -91,7 +91,7 @@ fif() {
 	  --preview "rg -i --pretty --context 2 {q} {}" | cut -d":" -f1,2
 	)
 
-	exec_with_history ${EDITOR:-vim} "${files[@]}"
+	exec_with_history ${EDITOR:-vim} "${selected[@]}"
 }
 
 # fbr - checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
