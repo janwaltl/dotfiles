@@ -122,6 +122,7 @@ vim.g.doge_mapping = "<leader>d"
 --------------------------------------------------------------------------------
 -- Move around the current tab with leap and easy motion
 function leap_search()
+	local leap = require("leap")
 	leap.leap({
 		target_windows = vim.tbl_filter(function(win)
 			return vim.api.nvim_win_get_config(win).focusable
