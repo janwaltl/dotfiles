@@ -65,7 +65,7 @@ function tff(){
 
 # Open file with editor
 function ff() {
-  files=($(fzf-tmux --query="$1" --multi --select-1 --exit-0))
+  files=($(FZF_DEFAULT_COMMAND="rg --files --hidden -L" fzf-tmux --query="$1" --multi --select-1 --exit-0))
 
   if [[ -n "$files" ]]; then
 	exec_with_history ${EDITOR:-vim} "${files[@]}"
