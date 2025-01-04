@@ -62,6 +62,7 @@ local function lspconfig_config()
 			"--completion-style=detailed",
 			"--function-arg-placeholders",
 			"--fallback-style=llvm",
+			"--query-driver=/**/*"
 		},
 		init_options = {
 			usePlaceholders = true,
