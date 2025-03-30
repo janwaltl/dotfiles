@@ -112,12 +112,8 @@ local function lspconfig_config()
 	lsp_config.gopls.setup({})
 end
 
--- Source of diagnostics messages
-vim.diagnostic.config({
-	virtual_text = { prefix = "●" },
-	severity_sort = true,
-	float = { source = "always" },
-})
+-- Show diagnostics as virtual lines
+vim.diagnostic.config({ virtual_lines = true, virtual_text = false })
 
 return {
 	{

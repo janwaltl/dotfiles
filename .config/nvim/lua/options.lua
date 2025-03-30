@@ -53,5 +53,5 @@ vim.api.nvim_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 vim.g.undotree_SplitWidth = 40
 -- ISAR paths
 vim.opt.path:append("out/*")
--- Gitgutte
+-- Gitgutter
 vim.g.gitgutter_map_keys = 0
