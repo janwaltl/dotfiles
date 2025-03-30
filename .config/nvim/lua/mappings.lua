@@ -121,9 +121,8 @@ kmap("n", "<leader>K", "K<C-w>T", { desc = "Open manpage in new tab" })
 vim.g.doge_mapping = "<leader>d"
 --------------------------------------------------------------------------------
 -- Move around the current tab with leap and easy motion
-function leap_search()
-	local leap = require("leap")
-	leap.leap({
+local function leap_search()
+	require('leap').leap({
 		target_windows = vim.tbl_filter(function(win)
 			return vim.api.nvim_win_get_config(win).focusable
 		end, vim.api.nvim_tabpage_list_wins(0)),
