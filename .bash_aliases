@@ -1,3 +1,9 @@
+if [ -d ~/.bash_aliases.d ]; then
+	for f in ~/.bashrc.d/*.alias ;do
+		. "$f"
+	done
+fi
+
 alias a='. venv/bin/activate'
 
 alias egrep='egrep --color=auto'
