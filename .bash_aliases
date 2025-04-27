@@ -1,5 +1,5 @@
 if [ -d ~/.bash_aliases.d ]; then
-	for f in ~/.bashrc.d/*.alias ;do
+	for f in ~/.bash_aliases.d/*.alias ;do
 		. "$f"
 	done
 fi
