@@ -89,7 +89,7 @@ kmap("n", "<leader>fr", ":FzfLua resume<CR>", { desc = "Resume last fzf search" 
 
 --------------------------------------------------------------------------------
 -- Work with hunks
-function hunk_quicklist()
+local function hunk_quicklist()
 	vim.cmd(":GitGutterQuickFix")
 	require("fzf-lua").quickfix()
 end

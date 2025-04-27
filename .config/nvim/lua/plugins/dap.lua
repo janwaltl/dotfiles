@@ -41,7 +41,7 @@ local function dap_config()
 				return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
 			end,
 			args = function()
-				s = vim.fn.input("Arguments: ")
+				local s = vim.fn.input("Arguments: ")
 				return vim.fn.split(s, " ", true)
 			end,
 			cwd = "${workspaceFolder}",
@@ -62,7 +62,7 @@ local function dap_config()
 				return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
 			end,
 			args = function()
-				s = vim.fn.input("Arguments: ")
+				local s = vim.fn.input("Arguments: ")
 				return vim.fn.split(s, " ", true)
 			end,
 			cwd = "${workspaceFolder}",

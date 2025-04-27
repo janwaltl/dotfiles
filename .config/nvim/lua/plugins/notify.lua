@@ -1,5 +1,5 @@
 local function notify_config()
-	notify = require("notify")
+	local notify = require("notify")
 
 	notify.setup({ stages = 'no_animation' })
 end
