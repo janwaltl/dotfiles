@@ -14,10 +14,16 @@ return {
 			local mason_lspconfig = require("mason-lspconfig")
 
 			mason_lspconfig.setup({
-				ensure_installed = { "rust_analyzer", "ruff_lsp",
+				ensure_installed = {
+					-- Rust
+					"rust_analyzer",
+					"ruff",
+					-- Python
 					"basedpyright",
+					-- Lua
 					"lua_ls",
-					--"clangd"
+					-- C++
+					"clangd",
 				},
 			})
 		end,
