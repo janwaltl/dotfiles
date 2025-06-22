@@ -28,3 +28,4 @@ require("lazy").setup("plugins", {
 
 require("mappings")
 require("colorscheme")
+require("utils")

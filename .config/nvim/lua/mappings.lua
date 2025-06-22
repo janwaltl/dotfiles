@@ -3,13 +3,7 @@
 --  - nvim-cmp.lua in particular.
 
 --Keyremap function with extra common options
-local function kmap(mode, lhs, rhs, opts)
-	local options = { noremap = true, silent = true }
-	if opts then
-		options = vim.tbl_extend("force", options, opts)
-	end
-	vim.keymap.set(mode, lhs, rhs, options)
-end
+local kmap = require('utils').kmap
 
 --------------------------------------------------------------------------------
 -- Remap leader to <space>
