@@ -30,7 +30,7 @@ local function get_python_venv_path(root_dir)
 
 	for _, venv in ipairs({ "venv", ".venv" }) do
 		local venv_python = path.join(root_dir, venv, "bin", "python")
-		local f = vim.loop.fs_stat(venv_python)
+		local f = vim.uv.fs_stat(venv_python)
 		if f and f.type == 'file' then
 			return venv_python
 		end
@@ -49,10 +49,10 @@ local function lspstatus_config()
 end
 
 local function lspconfig_config()
-	local lsp_config = require("lspconfig")
 	local lsp_status = require("lsp-status")
 
-	lsp_config.clangd.setup({
+	--------------------CPP--------------------
+	vim.lsp.config('clangd', {
 		handlers = lsp_status.extensions.clangd.setup(),
 		cmd = {
 			"clangd",
@@ -72,11 +72,14 @@ local function lspconfig_config()
 		capabilities = lsp_status.capabilities,
 	})
 
-	lsp_config.rust_analyzer.setup({
+	--------------------RUST-------------------
+	vim.lsp.config('rust_analyzer', {
 		on_attach = common_on_attach,
 		capabilities = lsp_status.capabilities,
 	})
 
+
+	--------------------LUA--------------------
 	vim.lsp.config('lua_ls', {
 		on_attach = common_on_attach,
 		capabilities = lsp_status.capabilities,
@@ -94,40 +97,23 @@ local function lspconfig_config()
 			}
 		}
 	})
-	local py_root_files = {
-		"pyproject.toml",
-		"setup.py",
-		"setup.cfg",
-		"requirements.txt",
-		"pyrightconfig.json",
-		"venv",
-		".venv",
-	}
-
-	lsp_config.basedpyright.setup({
+	--------------------PYTHON-----------------
+	vim.lsp.config('basedpyright', {
 		on_attach = common_on_attach,
 		capabilities = lsp_status.capabilities,
-		-- Override pyright root_dir generation
 		-- I also want to recognize project via venv,.venv dirs
-		root_dir = function(fname)
-			local util = require("lspconfig/util")
-			return util.root_pattern(unpack(py_root_files))(fname)
-		end,
+		root_markers = { ".venv", "venv" },
 		before_init = function(_, config)
 			config.settings.python = { pythonPath = get_python_venv_path(config.root_dir) }
 		end,
 	})
-
-	lsp_config.ruff.setup({
+	vim.lsp.config('ruff', {
 		on_attach = common_on_attach,
 		capabilities = lsp_status.capabilities,
-		root_dir = function(fname)
-			local util = require("lspconfig/util")
-			return util.root_pattern(unpack(py_root_files))(fname)
-		end,
 	})
 
-	lsp_config.gopls.setup({})
+
+	vim.lsp.config('gopls', {})
 end
 
 return {
