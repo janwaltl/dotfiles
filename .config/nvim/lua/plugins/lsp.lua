@@ -77,9 +77,22 @@ local function lspconfig_config()
 		capabilities = lsp_status.capabilities,
 	})
 
-	lsp_config.lua_ls.setup({
+	vim.lsp.config('lua_ls', {
 		on_attach = common_on_attach,
 		capabilities = lsp_status.capabilities,
+		settings = {
+			Lua = {
+				runtime = {
+					version = 'LuaJIT',
+				},
+				workspace = {
+					checkThirdParty = false,
+					library = {
+						vim.env.VIMRUNTIME
+					}
+				}
+			}
+		}
 	})
 	local py_root_files = {
 		"pyproject.toml",
@@ -116,9 +129,6 @@ local function lspconfig_config()
 
 	lsp_config.gopls.setup({})
 end
-
--- Show diagnostics as virtual lines
-vim.diagnostic.config({ virtual_lines = true, virtual_text = false })
 
 return {
 	{
