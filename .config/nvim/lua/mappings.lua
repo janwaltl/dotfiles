@@ -138,15 +138,6 @@ vim.g.EasyMotion_keys = "ABCDEGHILMNOPQRSTUVWXYZFJK"
 kmap("n", "<leader>nl", ":Notifications<CR>", { desc = "List notifications" })
 --------------------------------------------------------------------------------
 -- LSP code navigation
-kmap("n", "<space>wa", function()
-	vim.lsp.buf.add_workspace_folder()
-end, { desc = "LSP Add Workspace" })
-kmap("n", "<space>wr", function()
-	vim.lsp.buf.remove_workspace_folder()
-end, { desc = "LSP Remove Workspace" })
-kmap("n", "<space>wl", function()
-	print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-end, { desc = "List workspace folders" })
 kmap("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
 kmap("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
 kmap("n", "gk", vim.lsp.buf.hover, { desc = "Hover symbol" })
