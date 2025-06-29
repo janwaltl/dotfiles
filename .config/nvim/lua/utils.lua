@@ -35,6 +35,4 @@ function M.log(...)
 	M._fh:flush()
 end
 
-M.log("Hello there")
-
 return M
