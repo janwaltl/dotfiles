@@ -1,17 +1,22 @@
 local common_on_attach = function(client, bufnr)
-	require("lsp-status").on_attach(client)
-	-- Enable inlay hints
-	if client.server_capabilities.inlayHintProvider or
-		client.server_capabilities.clangdInlayHintsProvider then
-		vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+	local lsp_status = require("lsp-status")
+	lsp_status.on_attach(client)
+	local kmap = require("utils").kmap
+	local methods = vim.lsp.protocol.Methods
+	if client:supports_method(methods.textDocument_inlayHint) or client.server_capabilities.clangdInlayHintsProvider then
+		-- Toggle inlay hints
+		kmap("n", '<leader>lh', function()
+			vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bunr = bufnr }), { bunr = bufnr })
+		end, { desc = "Toggle inlay hints" })
+		kmap("n", '<leader>ld', function()
+				vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+			end,
+			{ desc = "Toggle diagnostics" })
 	end
-	if client.supports_method("textDocument/formatting") or true then
-		vim.cmd([[
-			augroup LspFormatting
-			autocmd! * <buffer>
-			autocmd BufWritePre <buffer> lua vim.lsp.buf.format()
-			augroup END
-			]])
+	if client:supports_method(methods.textDocument_formatting) then
+		local group = vim.api.nvim_create_augroup("AutoFormatting", { clear = true })
+		local format_buff = function() vim.lsp.buf.format({ bufnr = bufnr }) end
+		vim.api.nvim_create_autocmd("BufWritePre", { callback = format_buff, group = group, desc = "", buffer = bufnr })
 	end
 end
 
