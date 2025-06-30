@@ -35,6 +35,8 @@ local function treesitter_config()
 					["ia"] = "@parameter.inner",
 					["ib"] = "@block.inner",
 					["ab"] = "@block.outer",
+					["ar"] = "@assignment.rhs",
+					["al"] = "@assignment.lhs",
 				},
 			},
 			swap = { enable = false },
@@ -44,7 +46,8 @@ end
 
 return {
 	-- LSP
-	"nvim-treesitter/nvim-treesitter",
+	"nvim-treesitter/nvim-treesitter-textobjects",
+	dependencies = { "nvim-treesitter/nvim-treesitter" },
 	build = ":TSUpdate",
 	config = treesitter_config,
 }
