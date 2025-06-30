@@ -6,9 +6,9 @@ local diag_signs = {
 }
 local function diag_format_short(diagnostic)
 	return string.format(
-		"%s[%s]",
-		diagnostic.code,
-		diag_signs[diagnostic.severity]
+		"%s %s",
+		diagnostic.source,
+		diagnostic.code or ""
 	)
 end
 local function diag_format_detail(diagnostic)
