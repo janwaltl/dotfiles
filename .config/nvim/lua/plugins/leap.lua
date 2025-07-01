@@ -8,6 +8,8 @@ local function leap_config()
 		nocombine = true,
 	})
 	leap.opts.highlight_unlabeled_phase_one_targets = true
+	leap.opts.case_sensitive = false
+	leap.opts.labels = 'sfnjklhodweimbuyvrgtaqpcxz1234567890SFNJKLHODWEIMBUYVRGTAQPCXZ'
 
 	leap.opts.safe_labels = {}
 end
