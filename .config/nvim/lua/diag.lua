@@ -22,12 +22,7 @@ local function diag_format_detail(diagnostic)
 end
 
 vim.diagnostic.config({
-	virtual_lines = {
-		current_line = true,
-		format = diag_format_detail
-	},
 	virtual_text = { format = diag_format_short },
-	underline = true,
 	severity_sort = true
 })
 
