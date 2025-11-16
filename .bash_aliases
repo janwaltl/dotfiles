@@ -4,7 +4,7 @@ if [ -d ~/.bash_aliases.d ]; then
 	done
 fi
 
-alias a='. venv/bin/activate'
+alias a='test -d venv && source venv/bin/activate  || source .venv/bin/activate'
 
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
