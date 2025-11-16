@@ -107,6 +107,13 @@ local function lspconfig_config()
 		before_init = function(_, config)
 			config.settings.python = { pythonPath = get_python_venv_path(config.root_dir) }
 		end,
+		settings = {
+			basedpyright = {
+				analysis = {
+					typeCheckingMode = "standard"
+				}
+			}
+		}
 	})
 	vim.lsp.config('ruff', {
 		on_attach = common_on_attach,
