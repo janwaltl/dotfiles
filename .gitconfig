@@ -49,3 +49,5 @@
 # Include machine-specific config
 [include]
   path = ~/.gitconfig.d/.gitconfig
+[rerere]
+	enabled = true
