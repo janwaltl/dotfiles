@@ -31,6 +31,9 @@ shopt -s globstar
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 fi
+# Add local installs to path
+# needed when 'uv' is installed locally and with bash-completion in .bashrc.d
+export PATH=$HOME/.local/bin:$PATH
 
 if [ -d ~/.bashrc.d ]; then
 	for f in ~/.bashrc.d/*.bashrc ;do
@@ -65,7 +68,6 @@ TERM=xterm-256color
 
 
 # Add local BIN 
-export PATH=$HOME/.local/bin:$PATH
 export PATH=$PATH:/usr/local/go/bin
 export EDITOR=nvim
 export MANPAGER='nvim +Man!'
