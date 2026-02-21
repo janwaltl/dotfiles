@@ -15,6 +15,6 @@ local function leap_config()
 end
 
 return {
-	"ggandor/leap.nvim",
+    url = "https://codeberg.org/andyg/leap.nvim",
 	config = leap_config,
 }
