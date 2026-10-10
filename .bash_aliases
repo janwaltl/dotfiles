@@ -98,13 +98,24 @@ fif() {
 	exec_with_history ${EDITOR:-vim} "${files[@]}"
 }
 
-# fbr - checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
+# fbr - checkout local or remote branches, most recently committed first
 fbr() {
-  local branches branch
-  branches=$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)") &&
-  branch=$(echo "$branches" |
-           fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
-  exec_with_history git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+  local branches branch ref
+  branches=$(git for-each-ref --sort=-committerdate \
+    --format='%(if)%(symref)%(then)%(else)%(refname:short)%09%(refname)%(end)' \
+    refs/heads/ refs/remotes/ | sed '/^$/d') || return
+  branch=$(printf '%s\n' "$branches" | fzf-tmux -d 40% --with-nth=1 +m) || return
+  [[ -n $branch ]] || return 0
+
+  ref=${branch#*$'\t'}
+  case $ref in
+    refs/heads/*)
+      exec_with_history git checkout "${ref#refs/heads/}"
+      ;;
+    refs/remotes/*)
+      exec_with_history git checkout --track "${ref#refs/remotes/}"
+      ;;
+  esac
 }
 
 alias dotvim='vim ~/.config/nvim/'
