@@ -13,11 +13,6 @@ local common_on_attach = function(client, bufnr)
 			end,
 			{ desc = "Toggle diagnostics" })
 	end
-	if client:supports_method(methods.textDocument_formatting) then
-		local group = vim.api.nvim_create_augroup("AutoFormatting", { clear = true })
-		local format_buff = function() vim.lsp.buf.format({ bufnr = bufnr }) end
-		vim.api.nvim_create_autocmd("BufWritePre", { callback = format_buff, group = group, desc = "", buffer = bufnr })
-	end
 end
 
 local function get_python_venv_path(root_dir)
@@ -50,6 +45,30 @@ end
 
 local function lspconfig_config()
 	local lsp_status = require("lsp-status")
+	local formatting_method = vim.lsp.protocol.Methods.textDocument_formatting
+	local format_group = vim.api.nvim_create_augroup("LspFormatOnSave", { clear = true })
+	vim.api.nvim_create_autocmd("BufWritePre", {
+		group = format_group,
+		desc = "Format with an attached LSP client before saving",
+		callback = function(event)
+			local clients = vim.lsp.get_clients({ bufnr = event.buf })
+			table.sort(clients, function(a, b)
+				return a.id < b.id
+			end)
+			for _, client in ipairs(clients) do
+				if client:supports_method(formatting_method, event.buf) then
+					-- Use one provider only; lowest client ID is the earliest attached formatter.
+					vim.lsp.buf.format({
+						bufnr = event.buf,
+						filter = function(format_client)
+							return format_client.id == client.id
+						end,
+					})
+					return
+				end
+			end
+		end,
+	})
 
 	--------------------CPP--------------------
 	vim.lsp.config('clangd', {
