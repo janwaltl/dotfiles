@@ -33,7 +33,7 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 # Add local installs to path
 # needed when 'uv' is installed locally and with bash-completion in .bashrc.d
-export PATH=$HOME/.local/bin:$PATH
+export PATH="$HOME/.local/bin:$PATH"
 
 if [ -d ~/.bashrc.d ]; then
 	for f in ~/.bashrc.d/*.bashrc ;do
@@ -65,7 +65,7 @@ fi
 
 PS1='\[\e[0;92m\]\u\[\e[0m\]@\[\e[0;91m\]\h\[\e[0m\]|\[\e[0;96m\]\w\[\e[0m\]|\[\e[0;38;5;208m\]$(git branch 2>/dev/null | grep '"'"'^*'"'"' | colrm 1 2)\[\e[0m\]:\n\[\e[0m\]>\[\e[0m\]'
 # Add local BIN 
-export PATH=$PATH:/usr/local/go/bin
+export PATH="$PATH:/usr/local/go/bin"
 export EDITOR=nvim
 export MANPAGER='nvim +Man!'
 export FZF_DEFAULT_COMMAND='rg --files --hidden'
