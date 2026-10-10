@@ -3,36 +3,38 @@ local common_on_attach = function(client, bufnr)
 	lsp_status.on_attach(client)
 	local kmap = require("utils").kmap
 	local methods = vim.lsp.protocol.Methods
-	if client:supports_method(methods.textDocument_inlayHint) or client.server_capabilities.clangdInlayHintsProvider then
+	if
+		client:supports_method(methods.textDocument_inlayHint) or client.server_capabilities.clangdInlayHintsProvider
+	then
 		-- Toggle inlay hints
-		kmap("n", '<leader>lh', function()
+		kmap("n", "<leader>lh", function()
 			vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }), { bufnr = bufnr })
 		end, { desc = "Toggle inlay hints" })
-		kmap("n", '<leader>ld', function()
-				vim.diagnostic.enable(not vim.diagnostic.is_enabled())
-			end,
-			{ desc = "Toggle diagnostics" })
+		kmap("n", "<leader>ld", function()
+			vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+		end, { desc = "Toggle diagnostics" })
 	end
 end
 
 local function get_python_venv_path(root_dir)
-	local util = require("lspconfig/util")
-	local path = util.path
 	-- Use activated virtualenv.
-	if vim.env.VIRTUAL_ENV then
-		return path.join(vim.env.VIRTUAL_ENV, "bin", "python")
+	if vim.env.VIRTUAL_ENV and vim.env.VIRTUAL_ENV ~= "" then
+		return vim.fs.joinpath(vim.env.VIRTUAL_ENV, "bin", "python")
 	end
 
 	for _, venv in ipairs({ "venv", ".venv" }) do
-		local venv_python = path.join(root_dir, venv, "bin", "python")
-		local f = vim.uv.fs_stat(venv_python)
-		if f and f.type == 'file' then
+		local venv_python = vim.fs.joinpath(root_dir, venv, "bin", "python")
+		if vim.fn.executable(venv_python) == 1 then
 			return venv_python
 		end
 	end
 
-	-- Fallback to system Python.
-	return vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
+	-- Fall back to system Python; exepath() returns an empty string if missing.
+	local python = vim.fn.exepath("python3")
+	if python == "" then
+		python = vim.fn.exepath("python")
+	end
+	return python ~= "" and python or "python"
 end
 
 local function lspstatus_config()
@@ -103,7 +105,7 @@ local function lspconfig_config()
 	if #query_driver_paths > 0 then
 		table.insert(clangd_cmd, "--query-driver=" .. table.concat(query_driver_paths, ","))
 	end
-	vim.lsp.config('clangd', {
+	vim.lsp.config("clangd", {
 		handlers = lsp_status.extensions.clangd.setup(),
 		cmd = clangd_cmd,
 		init_options = {
@@ -116,48 +118,48 @@ local function lspconfig_config()
 	})
 
 	--------------------RUST-------------------
-	vim.lsp.config('rust_analyzer', {
+	vim.lsp.config("rust_analyzer", {
 		on_attach = common_on_attach,
 		capabilities = lsp_status.capabilities,
 	})
 
-
 	--------------------LUA--------------------
-	vim.lsp.config('lua_ls', {
+	vim.lsp.config("lua_ls", {
 		on_attach = common_on_attach,
 		capabilities = lsp_status.capabilities,
 		settings = {
 			Lua = {
 				runtime = {
-					version = 'LuaJIT',
+					version = "LuaJIT",
 				},
 				workspace = {
 					checkThirdParty = false,
 					library = {
-						vim.env.VIMRUNTIME
-					}
-				}
-			}
-		}
+						vim.env.VIMRUNTIME,
+					},
+				},
+			},
+		},
 	})
 	--------------------PYTHON-----------------
-	vim.lsp.config('basedpyright', {
+	-- Config arrays replace upstream values, so prepend the venv markers explicitly.
+	local basedpyright_root_markers = vim.list_extend({ ".venv", "venv" }, vim.lsp.config.basedpyright.root_markers)
+	vim.lsp.config("basedpyright", {
 		on_attach = common_on_attach,
 		capabilities = lsp_status.capabilities,
-		-- I also want to recognize project via venv,.venv dirs
-		root_markers = { ".venv", "venv" },
+		root_markers = basedpyright_root_markers,
 		before_init = function(_, config)
 			config.settings.python = { pythonPath = get_python_venv_path(config.root_dir) }
 		end,
 		settings = {
 			basedpyright = {
 				analysis = {
-					typeCheckingMode = "standard"
-				}
-			}
-		}
+					typeCheckingMode = "standard",
+				},
+			},
+		},
 	})
-	vim.lsp.config('ruff', {
+	vim.lsp.config("ruff", {
 		on_attach = common_on_attach,
 		capabilities = lsp_status.capabilities,
 	})
