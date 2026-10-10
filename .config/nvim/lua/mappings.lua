@@ -3,7 +3,7 @@
 --  - nvim-cmp.lua in particular.
 
 --Keyremap function with extra common options
-local kmap = require('utils').kmap
+local kmap = require("utils").kmap
 
 --------------------------------------------------------------------------------
 -- Remap leader to <space>
@@ -118,7 +118,7 @@ vim.g.doge_mapping = "<leader>d"
 --------------------------------------------------------------------------------
 -- Move around the current tab with leap and easy motion
 local function leap_search()
-	require('leap').leap({
+	require("leap").leap({
 		target_windows = vim.tbl_filter(function(win)
 			return vim.api.nvim_win_get_config(win).focusable
 		end, vim.api.nvim_tabpage_list_wins(0)),
@@ -145,9 +145,15 @@ kmap("n", "gu", vim.lsp.buf.signature_help, { desc = "Show function signature" }
 kmap("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
 kmap("n", "gr", ":FzfLua lsp_references<CR>", { desc = "List symbol references" })
 kmap("n", "gc", ":FzfLua lsp_incoming_calls<CR>", { desc = "List symbol references" })
-kmap("n", "ge", function() vim.diagnostic.open_float() end, {desc = "Open diagnostic"})
-kmap("n", "[g", function() vim.diagnostic.jump({ count = -1 }) end, { desc = "Previous diagnostic" })
-kmap("n", "]g", function() vim.diagnostic.jump({ count = 1 }) end, { desc = "Next diagnostic" })
+kmap("n", "ge", function()
+	vim.diagnostic.open_float()
+end, { desc = "Open diagnostic" })
+kmap("n", "[g", function()
+	vim.diagnostic.jump({ count = -1 })
+end, { desc = "Previous diagnostic" })
+kmap("n", "]g", function()
+	vim.diagnostic.jump({ count = 1 })
+end, { desc = "Next diagnostic" })
 kmap("n", "gl", ":FzfLua lsp_workspace_diagnostics<CR>", { desc = "List all diagnostics" })
 kmap("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code action" })
 kmap("v", "<leader>cf", vim.lsp.buf.format, { desc = "Format selection" })

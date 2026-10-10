@@ -9,12 +9,12 @@ local function leap_config()
 	})
 	leap.opts.highlight_unlabeled_phase_one_targets = true
 	leap.opts.case_sensitive = false
-	leap.opts.labels = 'sfnjklhodweimbuyvrgtaqpcxz1234567890SFNJKLHODWEIMBUYVRGTAQPCXZ'
+	leap.opts.labels = "sfnjklhodweimbuyvrgtaqpcxz1234567890SFNJKLHODWEIMBUYVRGTAQPCXZ"
 
 	leap.opts.safe_labels = {}
 end
 
 return {
-    url = "https://codeberg.org/andyg/leap.nvim",
+	url = "https://codeberg.org/andyg/leap.nvim",
 	config = leap_config,
 }

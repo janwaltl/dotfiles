@@ -5,11 +5,7 @@ local diag_signs = {
 	[vim.diagnostic.severity.HINT] = "H",
 }
 local function diag_format_short(diagnostic)
-	return string.format(
-		"%s %s",
-		diagnostic.source,
-		diagnostic.code or ""
-	)
+	return string.format("%s %s", diagnostic.source, diagnostic.code or "")
 end
 local function diag_format_detail(diagnostic)
 	return string.format(
@@ -23,7 +19,7 @@ end
 
 vim.diagnostic.config({
 	virtual_text = { format = diag_format_short },
-	severity_sort = true
+	severity_sort = true,
 })
 
 return {}
