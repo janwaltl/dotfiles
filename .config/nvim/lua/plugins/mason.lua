@@ -19,7 +19,10 @@ return {
 	{
 		"williamboman/mason.nvim",
 		config = function()
-			require("mason").setup()
+			require("mason").setup({
+				-- Prefer Mason binaries; commands absent from Mason can resolve via PATH.
+				PATH = "prepend",
+			})
 
 			local registry = require("mason-registry")
 			for _, tool in ipairs(ensure_installed) do
