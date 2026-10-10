@@ -70,7 +70,7 @@ function ff() {
 fd() {
   local dir
   dir=$(find ${1:-.} -path '*/\.*' -prune \
-                  -o -type d -print 2> /dev/null | fzf +m) &&
+                  -o -type d -print 2> /dev/null | fzf-tmux +m) &&
 
   exec_with_history cd "$dir"
 }
