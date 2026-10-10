@@ -53,7 +53,6 @@ function tff(){
 
 	if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
 		tmux new-session -s $selected_name -c $selected
-		exit 0
 	fi
 
 	if ! tmux has-session -t=$selected_name 2> /dev/null; then
