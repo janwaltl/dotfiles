@@ -77,4 +77,6 @@ set -o vi
 bind '"jk":vi-movement-mode'
 
 # Init Rust
-. "$HOME/.cargo/env"
+if [[ -r "$HOME/.cargo/env" ]]; then
+	. "$HOME/.cargo/env"
+fi

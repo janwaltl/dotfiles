@@ -4,7 +4,16 @@ if [ -d ~/.bash_aliases.d ]; then
 	done
 fi
 
-alias a='test -d venv && source venv/bin/activate  || source .venv/bin/activate'
+function a() {
+  if [[ -f venv/bin/activate ]]; then
+    source venv/bin/activate
+  elif [[ -f .venv/bin/activate ]]; then
+    source .venv/bin/activate
+  else
+    printf 'No project virtualenv found (expected venv/ or .venv/).\n' >&2
+    return 1
+  fi
+}
 
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
