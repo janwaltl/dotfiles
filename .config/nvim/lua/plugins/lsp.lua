@@ -161,9 +161,6 @@ local function lspconfig_config()
 		on_attach = common_on_attach,
 		capabilities = lsp_status.capabilities,
 	})
-
-
-	vim.lsp.config('gopls', {})
 end
 
 return {
