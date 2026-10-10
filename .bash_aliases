@@ -30,45 +30,40 @@ function fn_dotupdate() {
 	popd
 }
 
-function exec_with_history(){
-	history -s ${@}
-	$@
+function exec_with_history() {
+	local history_entry
+	printf -v history_entry '%q ' "$@"
+	history -s "${history_entry% }"
+	"$@"
 }
 
 # Start new tmux session from a folder
 function tff(){
+	local selected selected_name
 	if [[ $# -eq 1 ]]; then
 		selected=$1
 	else
-		selected=$(find ~/ -mindepth 1 -maxdepth 3 -type d | fzf)
+		selected=$(find "$HOME" -mindepth 1 -maxdepth 3 -type d | fzf)
 	fi
 
-	if [[ -z $selected ]]; then
-		exit 0
-	fi
+	[[ -n $selected ]] || return 0
 
-	selected_name=$(basename "$selected" | tr . _ | tr [:lower:] [:upper:])
-	echo "Selected: ${selected_name}"
-	tmux_running=$(pgrep tmux)
+	selected_name=$(basename "$selected" | tr '.' '_' | tr '[:lower:]' '[:upper:]')
 
-	if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
-		tmux new-session -s $selected_name -c $selected
-	fi
-
-	if ! tmux has-session -t=$selected_name 2> /dev/null; then
-		tmux new-session -ds $selected_name -c $selected
-	fi
-
-	tmux attach -t $selected_name
+	tmux new-session -A -s "$selected_name" -c "$selected"
 }
 
 # Open file with editor
 function ff() {
-  files=($(FZF_DEFAULT_COMMAND="rg --files --hidden -L" fzf-tmux --query="$1" --multi --select-1 --exit-0))
+  local file
+  local -a files=()
+  while IFS= read -r file; do
+    files+=("$file")
+  done < <(FZF_DEFAULT_COMMAND='rg --files --hidden -L' fzf-tmux \
+    --query="${1-}" --multi --select-1 --exit-0)
 
-  if [[ -n "$files" ]]; then
-	exec_with_history ${EDITOR:-vim} "${files[@]}"
-  fi
+  ((${#files[@]})) || return 0
+  exec_with_history ${EDITOR:-vim} "${files[@]}"
 }
 
 # Cd to selected directory
@@ -82,9 +77,12 @@ fd() {
 
 # Find in files, open in VIM
 fif() {
-	RG_DEFAULT_COMMAND="rg -i -l --hidden"
-	selected=$(
-	FZF_DEFAULT_COMMAND="rg --files" fzf \
+	local file
+	local -a files=()
+	while IFS= read -r file; do
+		files+=("$file")
+	done < <(
+	FZF_DEFAULT_COMMAND='rg --files --hidden' fzf-tmux \
 	  -m \
 	  -e \
 	  --ansi \
@@ -92,10 +90,11 @@ fif() {
 	  --reverse \
 	  --bind "ctrl-a:select-all" \
 	  --bind "f12:execute-silent:(subl -b {})" \
-	  --bind "change:reload:$RG_DEFAULT_COMMAND {q} || true" \
-	  --preview "rg -i --pretty --context 2 {q} {}" | cut -d":" -f1,2
+	  --bind 'change:reload:if [[ -n {q} ]]; then rg -i -l --hidden {q} || true; else rg --files --hidden; fi' \
+	  --preview 'rg -i --pretty --context 2 -- {q} {}'
 	)
 
+	((${#files[@]})) || return 0
 	exec_with_history ${EDITOR:-vim} "${files[@]}"
 }
 
@@ -114,4 +113,3 @@ alias dotalias='vim ~/.bash_aliases'
 alias dotupdate='fn_dotupdate'
 # Copy current hash to clipboard and print to stderr.
 alias gh='git rev-parse HEAD | tr -d '[:space:]' | tee /dev/fd/2 | xclip -selection c'
-
