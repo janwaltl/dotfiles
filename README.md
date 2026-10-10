@@ -40,9 +40,15 @@ servers and tools. These steps need network access and may take a while.
 ## Neovim
 
 1. Start Neovim and wait for Lazy.nvim to install plugins.
-2. Wait for Treesitter parsers to compile; progress appears in the status line.
+2. Wait for configured Treesitter parsers to install; first startup can take a
+   while.
 3. Use `:Mason` to inspect language servers and tools. The configured packages
    are installed automatically; restart Neovim after installation if needed.
+
+The current `nvim-treesitter` main branch requires `tree-sitter-cli` 0.26.1 or
+newer, a C compiler, `curl`, and `tar`. Install the CLI using your system package
+manager (not npm); parsers are installed at first startup and updated with the
+plugin.
 
 # Plugins & Keybindings
 
