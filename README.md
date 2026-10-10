@@ -9,37 +9,45 @@ Do not hesitate to ask me if something is not clear or does not work for you.
 You might be interest in
 [devenvsetup repo](https://github.com/janwaltl/devenvsetup).
 
-1. Clone to somewhere
-1. symlink the appropriate dotfiles to your home directory.
-1. Perform the steps below on your first run.
+1. Clone this repository.
+2. Symlink the appropriate files into your home directory, or use the
+   [devenvsetup](https://github.com/janwaltl/devenvsetup) repository to install
+   the listed dotfiles and their dependencies.
+3. Complete the first-run steps below.
 
-**Versions**:
+The companion devenvsetup currently pins:
 
-- Tmux around 3.2a
-- Neovim 0.8+
+- Neovim v0.12.6
+- tmux 3.8
 
-Both are automatically installed through the devenvsetup too.
+The pins live in `install_neovim.sh` and `install_tmux.sh`. Neovim plugin
+versions are locked in `.config/nvim/lazy-lock.json`; check plugin compatibility
+when bumping Neovim. The tmux configuration uses the `tmux-256color` terminfo
+entry; the companion setup installs it via `ncurses-term`.
 
 # First run
 
-Both Tmux and Neovim need to manually install the plugins on first startup.
+Neovim bootstraps Lazy.nvim and installs the plugins at the revisions in
+`lazy-lock.json` on first startup. Mason also installs the configured language
+servers and tools. These steps need network access and may take a while.
 
 ## Tmux
 
-1. Press "(CTRL-A)+I" to install plugins, give it a second, it does not print
-   progress, the lower status bar should become much nicer.
-1. Restart tmux.
+1. Press `Ctrl-a`, then `I`, to install TPM plugins. There is little progress
+   feedback; wait for completion.
+2. Restart tmux.
 
 ## Neovim
 
-1. Run `:PackerInstall`, wait for all plugins to be installed in the popup
-   window.
-1. Also wait for tree-siter compilation, only shown on the status line at the
-   bottom.
+1. Start Neovim and wait for Lazy.nvim to install plugins.
+2. Wait for Treesitter parsers to compile; progress appears in the status line.
+3. Use `:Mason` to inspect language servers and tools. The configured packages
+   are installed automatically; restart Neovim after installation if needed.
 
 # Plugins & Keybindings
 
-The lists below might not be always up-to-date, see the scripts themselves
+Keybindings below are based on the current configuration; plugin details are
+in `.config/nvim/lua/plugins/`.
 
 **Terminology:**
 
@@ -58,52 +66,45 @@ The lists below might not be always up-to-date, see the scripts themselves
 - create a new window - `prefix+c`
 - rename a window - `prefix + ,` (comma)
 - kill a panel - `prefix + x`.
-- move current window left (in the list of windows) - `ATL + p`
-- move current window right (in the list of windows) - `ATL + n`
-- select text with mouse and press "y" to store it in clipboard, requires
-  `xclip` or similar.
+- move current window left/right - `Alt-p` / `Alt-n`
+- in copy-mode (vi keys), `y` copies the selection to the tmux buffer. System
+  clipboard integration depends on the terminal/client configuration.
 
 Newly created window inherits `${CWD}` from the active window where `prefix+c`
 was pressed.
 
 ## Vim
 
-Configuration located in `./.config/nvim/lua`, slightly disorganized at the
-moment.
+Configuration is under `.config/nvim/`:
 
-- `options.lua`
-  - baseline reasonable options
-  - Global persistent `${HOME}/undodir` - one can revert changes on re-opened
-    files, clean from time to time.
-  - `80,120` visual guidelines
-  - no `.swap` files
-- `colorscheme.lua` - gruvbox settings
-- `mappings.lua` - majority of Keybindings but not all of them.
-- `plugins.lua` - list of all plugins, loaded with `packer`. Saving this file
-  updates the plugins.
-- `config/` - plugin-specific configs, more keymappings.
+- `lua/options.lua` - editor options, persistent undo files in `~/undodir`,
+  and 80/120-column guides.
+- `lua/colorscheme.lua` - Gruvbox settings.
+- `lua/mappings.lua` - most keybindings.
+- `lua/plugins/*.lua` - Lazy.nvim plugin specs and plugin configuration.
+- `lazy-lock.json` - locked plugin revisions.
 
 ### Generic
 
-- Make `;` as as `:` - no shift needed for writing commands.
+- Map `;` to `:` - no shift needed for writing commands.
 - `jk` to quit insert mode.
-- `<leader>` se to spacebar.
+- `<leader>` is the spacebar.
 - Move between panes with `<leader>+[hjkl]`
-- Move between tabs with `g+t` and `g+b`.
-- Move between buffers with `<leader>+[` and `<leader>+]`.
-- Switch the current line with the one up/down with `CTRL-k`/`CTRL-j`.
+- Move between tabs with `gt` and `gb`.
+- Move between buffers with `[b` and `]b`.
+- Move the current line up/down with `CTRL-k`/`CTRL-j`.
 
-### Snippets - Ultisnips
+### Snippets - LuaSnip
 
-Autocomplete snippets for various languages, one can create custom ones and
-place them into `Ultisnips/` directory.
+LuaSnip provides completion snippets. Snippet definitions are under
+`.config/nvim/snippets/`.
 
 ### Formatting
 
-Language files are autoformatted on save (`:w`).
-
-Respects `.clang-format` for C/C++, Python uses black, yaml and other have
-standard format too.
+Formatting runs on save when an attached LSP supports it. C/C++ style is
+configured by `.clang-format`; Markdown formatting uses `mdformat`. Ruff and
+BasedPyright provide Python diagnostics. `none-ls` also configures Ansible and
+YAML linting and codespell diagnostics.
 
 ### Git integration
 
@@ -113,13 +114,12 @@ manipulation.
 
 - `:Git <cmd>` for basically any git command.
 - Hunks are shown with signs in the left sidebar.
-- `<leader>+h+s` - stage the current hunk.
-- `<leader>+h+r` - review the current hunk - see diff.
-- `<leader>+h+u` - undo (restore) the current hunk.
-- `<leader>+h+n` - jump to the next hunk in the current file (does not wrap
-  around).
-- `<leader>+h+p` - jump to the previous hunk in the current file (does not wrap
-  around).
+- `<leader>gs` - Git status in a new tab; `<leader>gb` - Git blame.
+- `[h` / `]h` - previous/next hunk.
+- `<leader>hs` - stage the current hunk.
+- `<leader>hr` - preview the current hunk.
+- `<leader>hu` - undo the current hunk.
+- `<leader>hl` - list hunks.
 
 ### File navigation
 
@@ -129,7 +129,7 @@ Pretty fast fuzzy search for files (or words in them) in the current subtree.
 
 My main method of opening new files.
 
-[fzf.vim](https://github.com/junegunn/fzf.vim), requires fzf, ripgrep.
+Uses `fzf-lua`, fzf, and ripgrep.
 
 **In general:**
 
@@ -140,12 +140,12 @@ My main method of opening new files.
 1. open with `enter` or `CTRL-t`, `CTRL-v` for dedicated new tab or vertical
    split.
 
-- `<leader>+f+f` Search for all files matching the name.
-- `<leader>+f+g` Search for all files tracked by current git repository.
-- `<leader>+f+w` Search for all git files containing the given word.
-- `<leader>+f+c` Search git log history.
-- `<leader>+f+h` Search git log history, only commits relevant to the current
-  file.
+- `<leader>ff` search files.
+- `<leader>fg` search files tracked by the current Git repository.
+- `<leader>fw` search project contents.
+- `<leader>fc` search Git commits.
+- `<leader>fh` search recently opened files.
+- `<leader>fb` list buffers; `<leader>ft` list tabs.
 
 **File browser:**
 
@@ -155,7 +155,7 @@ My main method of opening new files.
 - open/close folders with `enter`.
 - Create new files in the "current" folder with `a`, trailing `/` create a
   directory.
-- eename file/dir with `r`.
+- Rename file/dir with `r`.
 - Remove file/dir with `d`.
 - Cut file/dir with `x`.
 - Copy file/dir with `c`.
@@ -166,8 +166,7 @@ My main method of opening new files.
 
 ### Jumping inside current file/tab
 
-Standard vim commands +
-[easymotion](https://github.com/easymotion/vim-easymotion).
+Standard Vim search plus EasyMotion and Leap.
 
 - Search by pressing `/` and writing the search query. Enter jumps to the first
   result.
@@ -176,20 +175,24 @@ Standard vim commands +
 - Move between jump lists with `CTRL-o` or `CTRL-i`, also works for jump between
   files opened from the file browser.
 
-**Easymotion workflow:**
+**Jump mappings:**
 
-1. Look at the place you want to jump, can be in another pane.
-1. Press `f`, `s`, followed by a single char, two chars, respectively.
-   `<leader>+w` marks all words.
-1. All matches are highlighted, press the key(s) for the place you want to jump
-   to. Do not use uppercase, they are that way just for better readability.
+- `,f` - EasyMotion jump by one character.
+- `,s` - EasyMotion jump by two characters.
+- `,w` - EasyMotion jump by word.
+- `s` - Leap jump by two characters.
 
 ### Autocompletion, linters, LSP
 
 Based on installed LSPs.
 
-Call `:LspInstallInfo` and install any LSPs you want (select via arrows, press
-`i`).
+Mason automatically installs the configured servers and tools on first start;
+use `:Mason` to inspect them. Mason-managed language servers are Clangd,
+rust-analyzer, Lua LS, BasedPyright, and Ruff. A `gopls` config is present, but
+Go is not currently in Mason's automatic-install list.
+Mason's bin directory is prepended to Neovim's `PATH`, so Mason copies take
+precedence there; system and uv-installed copies remain available to shells and
+other programs.
 
 - C++ requires `compile_commands.json` present, I use
   [compiledb](https://github.com/nickdiego/compiledb) for make-based projects,
@@ -201,10 +204,12 @@ Call `:LspInstallInfo` and install any LSPs you want (select via arrows, press
 - `<SHIFT-Tab>` tab but backwards.
 - `CTRL+e` closes the autocomplete suggestion window.
 
-There is also linting via clang-tidy, `pylint` and others.
+Additional diagnostics come from clang-tidy, yamllint, ansible-lint, and
+codespell. See `lua/plugins/mason.lua` and `lua/plugins/none-ls.lua` for the
+configured tools.
 
-- Python should respect `venv` but it's not 100% in my experience.
-- Do NOT run vim itself within activated `venv`.
+- Python LSP setup prefers an activated environment (`VIRTUAL_ENV`), then a
+  project `venv/` or `.venv/`, and finally Python from `PATH`.
 
 **Navigation:**
 
@@ -214,9 +219,8 @@ There is also linting via clang-tidy, `pylint` and others.
 - `gk` - show hover information about the symbol under cursor.
 - `gr` - find all symbol references.
 - `<leader>rn` - rename symbol under the cursor.
-- `ge` - show all diagnostics on the current line.
-- `g[` - jump to next diagnostic.
-- `g]` - jump to prev diagnostic.
+- `ge` - show the diagnostic under the cursor.
+- `[g` - jump to the previous diagnostic; `]g` - jump to the next one.
 
 ### Others
 
