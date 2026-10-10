@@ -39,26 +39,11 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		dependencies = {
 			"williamboman/mason.nvim",
+			"neovim/nvim-lspconfig",
 		},
 		config = function()
-			local mason_lspconfig = require("mason-lspconfig")
-			local registry = require("mason-registry")
-
-			-- Collect all LSP servers
-			local lsps = {}
-			for _, tool in ipairs(ensure_installed) do
-				if registry.has_package(tool) then
-					local t = registry.get_package(tool)
-					for _, value in ipairs(t.spec.categories) do
-						if value == "LSP" then
-							table.insert(lsps, tool)
-						end
-					end
-				end
-			end
-			mason_lspconfig.setup({
-				ensure_installed = lsps
-			})
+			-- Mason above owns installation; mason-lspconfig enables installed servers.
+			require("mason-lspconfig").setup()
 		end,
 	},
 	-- Formatting, linting;
