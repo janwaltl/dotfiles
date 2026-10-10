@@ -106,6 +106,9 @@ configured by `.clang-format`; Markdown formatting uses `mdformat`. Ruff and
 BasedPyright provide Python diagnostics. `none-ls` also configures Ansible and
 YAML linting and codespell diagnostics.
 
+Inlay hints are enabled by default. Use `<leader>lh` to toggle them for the
+current buffer.
+
 ### Git integration
 
 [vim-fugitive](https://github.com/tpope/vim-fugitive) for git commands,

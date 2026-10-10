@@ -14,6 +14,7 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Neovim options
 require("options")
+vim.lsp.inlay_hint.enable(true)
 
 -- Start lazy.nvim
 require("lazy").setup("plugins", {
