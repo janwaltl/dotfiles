@@ -71,18 +71,41 @@ local function lspconfig_config()
 	})
 
 	--------------------CPP--------------------
+	-- clangd may execute these drivers to query their built-in include paths.
+	-- Add trusted cross-compiler names here when a project needs them.
+	local query_driver_names = {
+		"cc",
+		"c++",
+		"gcc",
+		"g++",
+		"clang",
+		"clang++",
+		"clang-19",
+		"clang++-19",
+	}
+	local query_driver_paths, seen_query_drivers = {}, {}
+	for _, name in ipairs(query_driver_names) do
+		local path = vim.fn.exepath(name)
+		if path ~= "" and not seen_query_drivers[path] then
+			table.insert(query_driver_paths, path)
+			seen_query_drivers[path] = true
+		end
+	end
+	local clangd_cmd = {
+		"clangd",
+		"--background-index",
+		"--clang-tidy",
+		"--header-insertion=iwyu",
+		"--completion-style=detailed",
+		"--function-arg-placeholders",
+		"--fallback-style=llvm",
+	}
+	if #query_driver_paths > 0 then
+		table.insert(clangd_cmd, "--query-driver=" .. table.concat(query_driver_paths, ","))
+	end
 	vim.lsp.config('clangd', {
 		handlers = lsp_status.extensions.clangd.setup(),
-		cmd = {
-			"clangd",
-			"--background-index",
-			"--clang-tidy",
-			"--header-insertion=iwyu",
-			"--completion-style=detailed",
-			"--function-arg-placeholders",
-			"--fallback-style=llvm",
-			"--query-driver=/**/*"
-		},
+		cmd = clangd_cmd,
 		init_options = {
 			usePlaceholders = true,
 			completeUnimported = true,
