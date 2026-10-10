@@ -16,7 +16,7 @@ local function dap_config()
 		dapui.close()
 	end
 
-	dap.set_log_level("TRACE")
+	dap.set_log_level("INFO")
 
 	dap.adapters.cppdbg = {
 		id = "cppdbg",

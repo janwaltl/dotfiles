@@ -2,7 +2,7 @@ local function none_ls_config()
 	local null_ls = require("null-ls")
 
 	null_ls.setup({
-		debug = true,
+		debug = false,
 		sources = {
 			null_ls.builtins.diagnostics.ansiblelint,
 			null_ls.builtins.diagnostics.yamllint,
