@@ -116,23 +116,26 @@ kmap("n", "<leader>K", "K<C-w>T", { desc = "Open manpage in new tab" })
 -- Doc generation
 vim.g.doge_mapping = "<leader>d"
 --------------------------------------------------------------------------------
--- Move around the current tab with leap and easy motion
-local function leap_search()
-	require("leap").leap({
-		target_windows = vim.tbl_filter(function(win)
+-- Move around the current tab with Leap
+local function leap_search(inputlen)
+	local opts = {
+		windows = vim.tbl_filter(function(win)
 			return vim.api.nvim_win_get_config(win).focusable
 		end, vim.api.nvim_tabpage_list_wins(0)),
-	})
+	}
+	if inputlen then
+		opts.inputlen = inputlen
+		opts.inclusive = true
+	end
+	require("leap").leap(opts)
 end
 
-kmap("n", "s", leap_search, { desc = "Leap on 2 characters" })
-kmap("n", ",f", "<Plug>(easymotion-overwin-f)", { desc = "Search 1 characters" })
-kmap("n", ",s", "<Plug>(easymotion-overwin-f2)", { desc = "Search 2 characters" })
-kmap("n", ",w", "<Plug>(easymotion-overwin-w)", { desc = "Search words" })
-vim.g.EasyMotion_smartcase = 1
-vim.g.EasyMotion_do_mapping = 0
-vim.g.EasyMotion_use_upper = 1
-vim.g.EasyMotion_keys = "ABCDEGHILMNOPQRSTUVWXYZFJK"
+kmap("n", "s", function()
+	leap_search()
+end, { desc = "Leap on 2 characters" })
+kmap("n", ",f", function()
+	leap_search(1)
+end, { desc = "Leap on 1 character" })
 --------------------------------------------------------------------------------
 -- Notifications log
 kmap("n", "<leader>nl", ":Notifications<CR>", { desc = "List notifications" })

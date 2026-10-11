@@ -15,8 +15,6 @@ return {
 	{ "kkoomen/vim-doge", build = ":call doge#install()" },
 	-- Gitgutter - work with hunks from VIM
 	"airblade/vim-gitgutter",
-	-- Easy motion, leap for navigation
-	"easymotion/vim-easymotion",
 	-- language server settings defined in json for
 	"tamago324/nlsp-settings.nvim",
 	-- AUto pairs
