@@ -3,6 +3,9 @@ local common_on_attach = function(client, bufnr)
 	lsp_status.on_attach(client)
 	local kmap = require("utils").kmap
 	local methods = vim.lsp.protocol.Methods
+	kmap("n", "<leader>ld", function()
+		vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+	end, { desc = "Toggle diagnostics" })
 	if
 		client:supports_method(methods.textDocument_inlayHint) or client.server_capabilities.clangdInlayHintsProvider
 	then
@@ -10,9 +13,6 @@ local common_on_attach = function(client, bufnr)
 		kmap("n", "<leader>lh", function()
 			vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }), { bufnr = bufnr })
 		end, { desc = "Toggle inlay hints" })
-		kmap("n", "<leader>ld", function()
-			vim.diagnostic.enable(not vim.diagnostic.is_enabled())
-		end, { desc = "Toggle diagnostics" })
 	end
 end
 
