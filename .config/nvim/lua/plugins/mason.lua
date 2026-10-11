@@ -1,10 +1,10 @@
 local ensure_installed = {
 	-- Rust
-	"rust_analyzer",
+	"rust-analyzer",
 	"ruff",
 	"basedpyright",
 	-- Lua
-	"lua_ls",
+	"lua-language-server",
 	"stylua",
 	-- C++
 	"clangd",
